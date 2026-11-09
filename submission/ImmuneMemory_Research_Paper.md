@@ -225,3 +225,6 @@ In a controlled synthetic benchmark of 80 evaluated decisions, protective author
 
 ### A.3 AI Assistance Disclosure & Prior Work
 Google Cloud Vertex AI Gemini 2.5 Pro was the evaluated model. Claude and Antigravity agents provided coding, execution, and editorial assistance. We disclose that an earlier historical pilot in this repository failed due to an inverted execution order; that failed pilot and all raw negative data are preserved immutably in `corrective-v2/original-preservation.json`.
+
+### A.4 Code & Data Availability
+The complete experimental testbed, deterministic evaluation oracle, raw JSONL response journals, offline reproducibility evaluator (`evaluate_reproducibility.py`), and interactive HTML visualizer (`replay.html`) are open-source and publicly hosted at [https://github.com/soujasK/immune-memory](https://github.com/soujasK/immune-memory).
