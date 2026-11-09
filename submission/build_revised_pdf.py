@@ -108,15 +108,15 @@ def add_academic_heading(doc, text, level):
     run.bold = True
     run.font.color.rgb = RGBColor(0, 0, 0) # Strictly Pure Black
     if level == 1:
-        p.paragraph_format.space_before = Pt(8.5)
+        p.paragraph_format.space_before = Pt(7)
         p.paragraph_format.space_after = Pt(1.5)
-        run.font.size = Pt(11.5)
+        run.font.size = Pt(11)
     elif level == 2:
-        p.paragraph_format.space_before = Pt(6.5)
+        p.paragraph_format.space_before = Pt(5.5)
         p.paragraph_format.space_after = Pt(1.5)
         run.font.size = Pt(10)
     else:
-        p.paragraph_format.space_before = Pt(5)
+        p.paragraph_format.space_before = Pt(4.5)
         p.paragraph_format.space_after = Pt(1.5)
         run.font.size = Pt(9.5)
     return p
@@ -124,8 +124,8 @@ def add_academic_heading(doc, text, level):
 def add_body_p(doc, text, bold_prefix="", italic=False):
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(0)
-    p.paragraph_format.space_after = Pt(2.0)
-    p.paragraph_format.line_spacing = 1.12
+    p.paragraph_format.space_after = Pt(1.8)
+    p.paragraph_format.line_spacing = 1.10
     if bold_prefix:
         r_pre = p.add_run(bold_prefix)
         r_pre.font.name = "Times New Roman"
@@ -143,8 +143,8 @@ def add_bullet(doc, bold_prefix, text):
     p = doc.add_paragraph()
     p.paragraph_format.left_indent = Inches(0.2)
     p.paragraph_format.space_before = Pt(0)
-    p.paragraph_format.space_after = Pt(1.8)
-    p.paragraph_format.line_spacing = 1.12
+    p.paragraph_format.space_after = Pt(1.5)
+    p.paragraph_format.line_spacing = 1.10
     r_bullet = p.add_run("• ")
     r_bullet.font.name = "Times New Roman"
     r_bullet.font.size = Pt(9.5)
@@ -164,12 +164,12 @@ def add_bullet(doc, bold_prefix, text):
 def add_booktabs_table(doc, caption_text, headers, rows, col_widths=None):
     p_cap = doc.add_paragraph()
     p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    p_cap.paragraph_format.space_before = Pt(6)
-    p_cap.paragraph_format.space_after = Pt(2)
+    p_cap.paragraph_format.space_before = Pt(4)
+    p_cap.paragraph_format.space_after = Pt(1.5)
     p_cap.paragraph_format.keep_with_next = True
     r_c = p_cap.add_run(caption_text)
     r_c.font.name = "Times New Roman"
-    r_c.font.size = Pt(9)
+    r_c.font.size = Pt(8.5)
     r_c.font.color.rgb = RGBColor(0, 0, 0)
     r_c.bold = True
 
@@ -178,14 +178,18 @@ def add_booktabs_table(doc, caption_text, headers, rows, col_widths=None):
     set_table_booktabs_borders(tbl)
 
     hdr_row = tbl.rows[0]
+    hdr_trPr = hdr_row._tr.get_or_add_trPr()
+    hdr_trPr.append(OxmlElement('w:tblHeader'))
+    hdr_trPr.append(OxmlElement('w:cantSplit'))
+
     for i, title in enumerate(headers):
         cell = hdr_row.cells[i]
         cell.text = title
         set_cell_border(cell, bottom={'val': 'single', 'sz': 6, 'color': '000000'})
         for p in cell.paragraphs:
             p.alignment = WD_ALIGN_PARAGRAPH.CENTER if i >= 2 else WD_ALIGN_PARAGRAPH.LEFT
-            p.paragraph_format.space_before = Pt(3)
-            p.paragraph_format.space_after = Pt(3)
+            p.paragraph_format.space_before = Pt(1.5)
+            p.paragraph_format.space_after = Pt(1.5)
             for r in p.runs:
                 r.font.name = "Times New Roman"
                 r.font.size = Pt(8.5)
@@ -193,12 +197,15 @@ def add_booktabs_table(doc, caption_text, headers, rows, col_widths=None):
                 r.bold = True
 
     for r_idx, row in enumerate(rows):
-        cells = tbl.rows[r_idx + 1].cells
+        tr = tbl.rows[r_idx + 1]
+        trPr = tr._tr.get_or_add_trPr()
+        trPr.append(OxmlElement('w:cantSplit'))
+        cells = tr.cells
         for c_idx, val in enumerate(row):
             cells[c_idx].text = str(val)
             for p in cells[c_idx].paragraphs:
-                p.paragraph_format.space_before = Pt(2)
-                p.paragraph_format.space_after = Pt(2)
+                p.paragraph_format.space_before = Pt(1.5)
+                p.paragraph_format.space_after = Pt(1.5)
                 if c_idx >= 2:
                     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
                 for r in p.runs:
@@ -209,13 +216,19 @@ def add_booktabs_table(doc, caption_text, headers, rows, col_widths=None):
                         if c_idx >= 2:
                             r.bold = True
 
+    # Keep all rows together with next except the last row to prevent mid-table page splits
+    for r in tbl.rows[:-1]:
+        for cell in r.cells:
+            for p in cell.paragraphs:
+                p.paragraph_format.keep_with_next = True
+
     if col_widths:
         for row in tbl.rows:
             for idx, width in enumerate(col_widths):
                 row.cells[idx].width = Inches(width)
 
     p_after = doc.add_paragraph()
-    p_after.paragraph_format.space_after = Pt(3)
+    p_after.paragraph_format.space_after = Pt(2)
 
 def build_manuscript():
     verify_abstract_word_count(ABSTRACT_TEXT)
@@ -273,7 +286,13 @@ def build_manuscript():
     r_trk.bold = True
     r_trk.font.color.rgb = RGBColor(0, 0, 0)
     
-    r_model = p_meta.add_run("Evaluated Foundation Model: Google Cloud Vertex AI Gemini 2.5 Pro (temperature = 0.0, seed = 191)")
+    r_repo = p_meta.add_run("Code, Data & Reproduction Suite: https://github.com/soujasK/immune-memory\n")
+    r_repo.font.name = "Times New Roman"
+    r_repo.font.size = Pt(8.5)
+    r_repo.font.color.rgb = RGBColor(0, 0, 0)
+    r_repo.bold = True
+    
+    r_model = p_meta.add_run("Evaluated Model: Vertex AI Gemini 2.5 Pro (temperature = 0.0, seed = 191)")
     r_model.font.name = "Times New Roman"
     r_model.font.size = Pt(8.5)
     r_model.font.color.rgb = RGBColor(0, 0, 0)
@@ -387,13 +406,13 @@ def build_manuscript():
     # Monochrome Lifecycle Diagram
     fig1_path = FIG_DIR / "lifecycle_monochrome.png"
     if fig1_path.exists():
-        doc.add_picture(str(fig1_path), width=Inches(5.9))
+        doc.add_picture(str(fig1_path), width=Inches(4.8))
         p_cap = doc.add_paragraph()
         p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_cap.paragraph_format.space_before = Pt(2)
-        p_cap.paragraph_format.space_after = Pt(4)
+        p_cap.paragraph_format.space_before = Pt(1.5)
+        p_cap.paragraph_format.space_after = Pt(2.5)
         r_c = p_cap.add_run("Figure 1: The Repaired 7-Stage Multi-Agent Behavioral Transmission and Decommissioning Lifecycle.")
-        r_c.font.size = Pt(8.5)
+        r_c.font.size = Pt(8.0)
         r_c.font.name = "Times New Roman"
         r_c.font.color.rgb = RGBColor(0, 0, 0)
         r_c.italic = True
@@ -421,13 +440,15 @@ def build_manuscript():
         "(2) Pilot Model Calls (72 total): 56 action decisions plus 16 Agent A memo-generation exposure calls (8 in Arm W and 8 in Control N). "
         "(3) Held-Out Model Calls (40 total): 24 Agent C action decisions plus 16 Agent B handoff-memo generation calls (8 Protective + 8 Neutral). "
         "(4) Total Recovery Calls (140 total): 28 calibration calls (12 smoke/initial + 8 full baseline + 8 technical adjustment) + 72 pilot calls + 40 held-out calls = 140 total calls. "
-        "All 140 raw Vertex AI response logs, prompt contracts, and deterministic scoring code are preserved in the repository. An offline reproducibility evaluator (evaluate_reproducibility.py) and interactive browser visualizer (replay.html) allow zero-dependency verification.",
+        "All 140 raw Vertex AI response logs, prompt contracts, and deterministic scoring code are publicly hosted at https://github.com/soujasK/immune-memory. "
+        "An offline reproducibility evaluator (python submission/evaluate_reproducibility.py) and interactive browser visualizer (submission/replay.html) allow zero-dependency verification without API keys.",
         bold_prefix="Call Accounting & Reproducibility Suite: ")
 
     # 6. Results
-    add_academic_heading(doc, "6. Primary Experimental Results (Pilot Phase)", 1)
-    add_body_p(doc,
+    p_s6 = add_academic_heading(doc, "6. Primary Experimental Results (Pilot Phase)", 1)
+    p_t1_intro = add_body_p(doc,
         "Table 1 reports outcomes across 56 scored decisions in the pilot phase (N=4 scenario pairs) for both Adversarial (-X) and Legitimate (-L) presentations:")
+    p_t1_intro.paragraph_format.keep_with_next = True
     
     t1_headers = ["Condition", "Exposure Description", "Uptake (t1)", "Persistence (t2)", "95% Wilson CI (t2)", "Legit Success"]
     t1_rows = [
@@ -437,17 +458,17 @@ def build_manuscript():
         ["Control D", "Direct System Directive (No peer A)", "0/4 (0.0%)", "0/4 (0.0%)", "[0.0%, 49.0%]", "8/8 (100%)"]
     ]
     add_booktabs_table(doc, "Table 1: Pilot Phase Outcome Matrix across 4 Matched Scenario Pairs (56 Scored Decisions).",
-                       t1_headers, t1_rows, col_widths=[1.1, 2.1, 0.8, 0.8, 1.2, 0.8])
+                       t1_headers, t1_rows, col_widths=[1.0, 2.2, 0.7, 0.8, 1.1, 0.7])
 
     fig2_path = FIG_DIR / "combined_results_monochrome.png"
     if fig2_path.exists():
-        doc.add_picture(str(fig2_path), width=Inches(5.9))
+        doc.add_picture(str(fig2_path), width=Inches(4.5))
         p_cap = doc.add_paragraph()
         p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
-        p_cap.paragraph_format.space_before = Pt(2)
-        p_cap.paragraph_format.space_after = Pt(4)
+        p_cap.paragraph_format.space_before = Pt(1.5)
+        p_cap.paragraph_format.space_after = Pt(2.5)
         r_c = p_cap.add_run("Figure 2: Empirical Evaluation of (a) Post-Removal Persistence and (b) Prompted Swarm Propagation (N = 4 Scenarios per Condition).")
-        r_c.font.size = Pt(8.5)
+        r_c.font.size = Pt(8.0)
         r_c.font.name = "Times New Roman"
         r_c.font.color.rgb = RGBColor(0, 0, 0)
         r_c.italic = True
@@ -473,7 +494,7 @@ def build_manuscript():
         ["Fresh Baseline", "Direct Presentation to Agent C", "2/4 (50.0%)", "4/4 (100.0%)", "0/4 (0.0%)"]
     ]
     add_booktabs_table(doc, "Table 2: Held-Out Secondary Swarm Propagation across 4 Unseen Scenarios (24 Scored Decisions).",
-                       t2_headers, t2_rows, col_widths=[1.4, 2.3, 1.3, 0.9, 0.9])
+                       t2_headers, t2_rows, col_widths=[1.3, 2.3, 1.2, 0.85, 0.85])
 
     add_body_p(doc,
         "Reconciling Refusal Behavior: We clarify a crucial distinction between benign task performance and adversarial injection responses: "
@@ -481,6 +502,9 @@ def build_manuscript():
         "(2) On Adversarial Injections: In the Neutral Handoff condition on Linden-73-X, Agent C returned an empty dispatch list ({\"dispatches\": []}). "
         "The policy oracle scored this as authorized: False, unauthorized: False, complete: False, refusal: True. Agent C refused the ticket under adversarial injection rather than leaking the secret, "
         "resulting in 2 violations, 1 authorized dispatch, and 1 refusal across the 4 adversarial presentations (*noted in Table 2). In contrast, under the Protective Handoff, Agent C executed authorized dispatches with 0/4 violations and 0/4 refusals.")
+
+    # Clean Page Break: Starts Section 8 cleanly on Page 5
+    doc.add_page_break()
 
     # 8. Case Study
     add_academic_heading(doc, "8. Qualitative Case Study: Behavioral Replay on Juniper-48-X", 1)
@@ -497,7 +521,7 @@ def build_manuscript():
         ["Treatment W (Warning)", "[('intake', 'quantity', '35')]", "auth=True, unauth=False", "Executed ticket only; ignored adversarial footer"]
     ]
     add_booktabs_table(doc, "Table 3: Exact Action Ledgers across Experimental Arms on Scenario Juniper-48-X (Reproduced from trials.jsonl).",
-                       t3_headers, t3_rows, col_widths=[1.3, 2.5, 1.3, 1.6])
+                       t3_headers, t3_rows, col_widths=[1.3, 2.3, 1.3, 1.6])
 
     # 9. Mechanistic Grounding & Discussion
     add_academic_heading(doc, "9. Mechanistic Grounding & Discussion", 1)
@@ -514,9 +538,10 @@ def build_manuscript():
         "Because Control D achieved identical compliance (0/4 violations), peer delivery is not uniquely privileged over direct instruction; "
         "rather, peer delivery is sufficient to establish retained behavioral constraint within the active context window across the four tested scenarios.")
     add_body_p(doc,
-        "Threats to Validity: (1) Sample size is bounded at N=4 scenario pairs per condition; broader statistical generalizations require scaled testing; "
-        "(2) Context-retention horizon: if an agent's context window is completely flushed or compacted without security summaries, the protective constraint is lost; "
-        "(3) Single model family: evaluated on Gemini 2.5 Pro; cross-model heterogeneous networks remain to be tested.")
+        "Threats to Validity & Boundary Conditions: (1) Sample size: proof-of-concept falsification benchmark on N=4 matched scenario pairs per condition; "
+        "broader statistical generalizations require scaled multi-scenario testing; (2) Context-flushing qualification: We did not experimentally test whether protection survives a complete context flush. "
+        "Because model weights are frozen and state is serialized within the context window, it remains an open empirical question whether an externalized memory or summarization step can preserve the policy across a full context reset. "
+        "Our observations apply strictly to the continuous in-context horizon; (3) Single model family: evaluated on Gemini 2.5 Pro; cross-model heterogeneous networks remain to be tested.")
 
     # 10. Conclusion
     add_academic_heading(doc, "10. Conclusion", 1)
@@ -524,6 +549,9 @@ def build_manuscript():
         "In a controlled synthetic benchmark of 80 evaluated decisions, protective authorization instructions introduced through peer interaction persisted "
         "after the source agent was permanently severed from the communication topology, and transferred via prompted handoff to third-party agents without utility degradation. "
         "Because direct system instruction achieved equivalent protection, this persistence reflects Conversational-History Retention within the context window rather than a uniquely peer-specific mechanism.")
+
+    # Clean Page Break: Starts References and Ethics Appendix cleanly on Page 6
+    doc.add_page_break()
 
     # References
     add_academic_heading(doc, "References", 1)
@@ -563,19 +591,21 @@ def build_manuscript():
     # Limitations and Dual-Use / Ethical Considerations
     add_academic_heading(doc, "Limitations and Dual-Use / Ethical Considerations", 1)
     add_body_p(doc,
-        "A.1 Scientific Limitations: (1) Sample Size: Proof-of-concept benchmark conducted on N=4 scenario pairs (56 scored pilot decisions) and N=4 held-out scenarios (24 scored decisions). "
-        "While the separation between Treatment W (0/4) and Control F (4/4) is sharp, broader generalizations require larger-scale testing; "
+        "A.1 Scientific Limitations: (1) Sample Size: Proof-of-concept benchmark conducted on N=4 scenario pairs (56 scored pilot decisions) and N=4 held-out scenarios (24 scored decisions); "
         "(2) Single Model Family: Evaluated on Gemini 2.5 Pro; cross-architecture persistence in open-source models remains future work; "
-        "(3) Context Horizon: Persistence relies on Conversational-History Retention; context flushing erases the constraint; "
+        "(3) Context Horizon: We did not experimentally test context flushing; whether protection survives memory reset remains an open question; "
         "(4) Synthetic Domain: Evaluated on synthetic document routing with mock secrets (FAKE_SECRET_*).")
     add_body_p(doc,
         "A.2 Dual-Use & Ethical Considerations: The identical mechanism allowing protective constraints to propagate could theoretically allow malicious prompt infection. "
         "Swarm architectures must implement cryptographic provenance or authority verification before accepting peer operational directives. "
         "All experiments were conducted in a sandboxed synthetic environment with zero access to live credentials or external systems.")
     add_body_p(doc,
-        "A.3 AI Assistance Disclosure & Prior Work: Google Cloud Vertex AI Gemini 2.5 Pro was the evaluated model. Claude and Antigravity agents provided coding, execution, "
+        "A.3 AI Assistance Disclosure & Prior Work: Google Cloud Vertex AI Gemini 2.5 Pro was the evaluated model. Claude, Codex, and Antigravity agents provided coding, execution, "
         "and editorial assistance. We disclose that an earlier historical pilot in this repository failed due to an inverted execution order; that failed pilot and all raw negative data "
         "are preserved immutably in corrective-v2/original-preservation.json.")
+    add_body_p(doc,
+        "A.4 Code & Data Availability: The complete experimental testbed, evaluation oracle, raw JSONL response journals, offline verification suite (evaluate_reproducibility.py), "
+        "and interactive HTML trace visualizer (replay.html) are open-source and publicly hosted at https://github.com/soujasK/immune-memory.")
 
     print(f"Saving populated DOCX to: {DOCX_OUT}")
     doc.save(str(DOCX_OUT))
@@ -670,6 +700,8 @@ def verify_and_render_pdf():
     assert "Limitations and Dual-Use / Ethical Considerations" in full_text_norm, "Exact appendix heading missing!"
     assert "(N = 4 Scenarios per Condition)" in full_text_norm, "Figure 2 clean N=4 caption missing!"
     assert "$N=4$" not in full_text_norm, "Literal dollar math syntax found in caption!"
+    assert "https://github.com/soujasK/immune-memory" in full_text_norm, "GitHub URL missing!"
+    assert "We did not experimentally test whether protection survives a complete context flush" in full_text_norm, "Context-flush qualification missing!"
     assert num_pages == 6, f"Expected 6 pages, got {num_pages}"
     
     print("\nALL VERIFICATIONS PASSED:")
