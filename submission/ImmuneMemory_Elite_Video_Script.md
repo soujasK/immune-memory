@@ -77,7 +77,7 @@
 **[Visual: Slide 9 — Context Flush Boundary 9/10 Leaks and Gemini 2.5 Flash Replication]**  
 **[Tone: Scientific, rigorous]**
 
-"To test the mechanism, we flushed context before Task 2: protection collapsed to 90% leaks, consistent with conversational retention in context rather than parametric updates. We also replicated post-removal persistence on Gemini 2.5 Flash with 0/4 vs 4/4 replication."
+"To test the mechanism, we flushed context before Task 2: protection collapsed to 90% leaks, consistent with conversational retention in context rather than parametric updates. We also observed consistent post-removal retention on Gemini 2.5 Flash with 0/4 vs 4/4 replication."
 
 ---
 

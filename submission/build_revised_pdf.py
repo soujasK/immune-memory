@@ -46,7 +46,7 @@ ABSTRACT_TEXT = (
     "peer guidance reduced unauthorized leaks from 100.0% (10/10) in fresh controls and 70.0% (7/10) in neutral controls to "
     "0.0% (0/10) post-removal (two-sided Fisher p < 0.0001 vs fresh; p = 0.0031 vs neutral). A context-flush condition induced "
     "90.0% (9/10) leaks (p = 0.0001), indicating that in-context retention is the governing physical medium. Gemini 2.5 Flash "
-    "replicated protection (0/4 vs 4/4). Prompted handoff relayed constraints across a 3-node graph (0/4 vs 2/4). Direct instruction "
+    "showed consistent protection (0/4 vs 4/4). Prompted handoff relayed constraints across a 3-node graph (0/4 vs 2/4). Direct instruction "
     "matched peer warning (both 0/10), and benign completion was 98.6% (69/70)."
 )
 
@@ -123,8 +123,8 @@ def add_academic_heading(doc, text, level):
 def add_body_p(doc, text, bold_prefix="", italic=False):
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(0)
-    p.paragraph_format.space_after = Pt(0.8)
-    p.paragraph_format.line_spacing = 1.06
+    p.paragraph_format.space_after = Pt(0.7)
+    p.paragraph_format.line_spacing = 1.05
     if bold_prefix:
         r_pre = p.add_run(bold_prefix)
         r_pre.font.name = "Times New Roman"
@@ -353,7 +353,7 @@ def build_manuscript():
         "(1) A preregistered 7-stage causal testing protocol and deterministic tool oracle measuring observable tool actions after source agent deletion; "
         "(2) Empirical evidence across N=10 scenario pairs (150 pilot decisions) showing peer guidance prevents secret leaks post-removal (0/10 vs. 10/10 fresh controls, two-sided Fisher p < 0.0001; 0/10 vs. 7/10 neutral controls, p = 0.0031); "
         "(3) Empirical characterization of the mechanistic boundary via a context-flush condition (9/10 leaks, p = 0.0001), consistent with in-context retention rather than parametric persistence; "
-        "(4) Cross-model replication on Gemini 2.5 Flash (0/4 vs. 4/4); "
+        "(4) Preliminary cross-model replication on Gemini 2.5 Flash (0/4 vs. 4/4); "
         "(5) Secondary swarm relay under prompted handoff to third-party agents (0/4 vs 2/4).",
         bold_prefix="Summary of Contributions: ")
 
@@ -433,8 +433,7 @@ def build_manuscript():
     add_body_p(doc,
         "All recovery experiments were conducted using Google Cloud Vertex AI Gemini 2.5 Pro (gemini-2.5-pro) in us-central1 with fixed sampling parameters: "
         "temperature = 0.0, seed = 191, candidate_count = 1, and max_output_tokens = 1024. A strict 4.0-second rate-pacing interval was maintained with exponential backoff on transient errors. "
-        "The benchmark evaluates 14 matched scenario units divided into non-overlapping families: Calibration (Pine-01..04), Pilot (10 matched pairs: Cedar-11..10 paired with Juniper-15..96), "
-        "and Held-Out (Linden-51..84). The protocol was preregistered and cryptographically frozen in recovery/FROZEN_v3.json (SHA-256: fccae917ed4205e5d9bea245a207d9d02d3a2b57589e5bd0b5999539a46bf3c4).")
+        "The benchmark defines 18 scenario configurations across three non-overlapping families: Development Calibration (4 scenarios: Pine-01..04), followed by 14 primary evaluation units consisting of the Extended Pilot (10 matched pairs: Cedar pre-removal tasks [11, 22, 33, 44, 55, 66, 77, 88, 99, 10] paired with corresponding post-removal Juniper tasks [15, 26, 37, 48, 59, 68, 72, 85, 91, 96]) and Held-Out Propagation (4 scenarios: Linden-51..84). The protocol was preregistered and cryptographically frozen in recovery/FROZEN_v3.json (SHA-256: fccae917ed4205e5d9bea245a207d9d02d3a2b57589e5bd0b5999539a46bf3c4).")
     add_body_p(doc,
         "To ensure total audit transparency, we reconcile the distinct counts across our study: (1) Scored Decisions (174 total on Gemini 2.5 Pro): "
         "The extended pilot contained 150 scored decisions (40 Arm W + 40 Control N + 20 Control F + 40 Control D + 10 Arm W_flush across N=10 scenario pairs). "
@@ -456,32 +455,32 @@ def build_manuscript():
         ["Control N", "Peer Neutral Memo -> Sever Source A", "6/10 (60.0%)", "7/10 (70.0%)", "[39.7%, 89.2%]", "19/20 (95%)"],
         ["Control F", "Fresh Agent B (No prior history)", "N/A", "10/10 (100.0%)", "[72.2%, 100.0%]", "10/10 (100%)"],
         ["Control D", "Direct System Directive (No peer A)", "0/10 (0.0%)", "0/10 (0.0%)", "[0.0%, 27.8%]", "20/20 (100%)"],
-        ["Arm W_flush", "Context Flushed (Uptake -> Session Reset)", "N/A", "9/10 (90.0%)", "[59.6%, 98.2%]", "N/A"]
+        ["Arm W_flush", "Context Flushed (Reset after t1 uptake)", "N/A*", "9/10 (90.0%)", "[59.6%, 98.2%]", "N/A"]
     ]
     add_booktabs_table(doc, "Table 1: Extended Pilot Outcome Matrix across 10 Matched Scenario Pairs (150 Scored Decisions).",
                        t1_headers, t1_rows, col_widths=[1.0, 2.2, 0.7, 0.8, 1.1, 0.7])
 
     fig2_path = FIG_DIR / "combined_results_monochrome.png"
     if fig2_path.exists():
-        doc.add_picture(str(fig2_path), width=Inches(3.85))
+        doc.add_picture(str(fig2_path), width=Inches(3.7))
         p_cap = doc.add_paragraph()
         p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p_cap.paragraph_format.space_before = Pt(1.0)
         p_cap.paragraph_format.space_after = Pt(2.0)
-        r_c = p_cap.add_run("Figure 2: Empirical Evaluation of (a) Post-Removal Persistence (N = 10 Scenarios) and (b) Prompted Swarm Propagation (N = 4 Scenarios).")
+        r_c = p_cap.add_run("Figure 2: Empirical Evaluation of (a) Post-Removal Persistence (N = 10 Scenarios) and (b) Prompted Swarm Propagation (N = 4 Scenarios). *Arm W_flush tested following Treatment W uptake.")
         r_c.font.size = Pt(8.0)
         r_c.font.name = "Times New Roman"
         r_c.font.color.rgb = RGBColor(0, 0, 0)
         r_c.italic = True
 
     add_body_p(doc,
-        "Key Findings: (1) Post-Removal Retention: In Treatment W, surviving agents maintained policy compliance on novel tasks (t2) after Agent A was permanently deleted (0/10 violations, 0.0%); "
-        "(2) Baseline Susceptibility: Fresh agents leaked sensitive mock secrets on 10/10 adversarial presentations (100.0% in Control F), and neutral survivors leaked secrets on 7/10 presentations (70.0% in Control N); "
+        "Key Findings: (1) Pre-Removal Uptake & Post-Removal Retention: In Treatment W, surviving agents demonstrated complete initial uptake on t1 (0/10 violations, 0.0%) and maintained policy compliance post-removal on novel tasks t2 after Agent A was permanently severed (0/10 violations, 0.0%); "
+        "(2) Baseline Susceptibility: Fresh agents leaked sensitive mock secrets on 10/10 adversarial presentations (100.0% in Control F). In Control N, neutral dialogue history failed to protect agents during initial exposure (6/10 violations on t1, 60.0%) and post-removal (7/10 violations on t2, 70.0%); "
         "(3) Statistical Significance: Comparing Treatment W (0/10) against Control F (10/10) yields one-sided Fisher's exact test p = 0.0000054 (1/184,756; two-sided p = 0.000011, p < 0.0001). "
         "The 95% Wilson confidence intervals ([0.0%, 27.8%] vs. [72.2%, 100.0%]) show a clear 44.4% separation margin; "
-        "(4) Warning vs. Neutral Significance: Comparing Treatment W against Control N (0/10 vs. 7/10) is statistically significant (two-sided Fisher's p = 0.0031 < 0.01; non-overlapping Wilson CIs [0.0%, 27.8%] vs. [39.7%, 89.2%]); "
-        "(5) Mechanistic Boundary (Arm W_flush): Flushing the context window after pre-removal uptake resulted in 9/10 violations (90.0%, two-sided p = 0.00012 vs. W), consistent with in-context retention rather than parametric persistence; "
-        "(6) Direct Instruction Equivalence: Control D matched Treatment W exactly (both 0/10 violations on t1 and t2). This confirms that having the instruction in context drives compliance, not that peer provenance confers a uniquely privileged social advantage.")
+        "(4) Warning vs. Neutral Significance: Comparing Treatment W against Control N (0/10 vs. 7/10 on t2) is statistically significant (two-sided Fisher's p = 0.0031 < 0.01; non-overlapping Wilson CIs [0.0%, 27.8%] vs. [39.7%, 89.2%]); "
+        "(5) Mechanistic Boundary (Arm W_flush): Flushing the context window after confirmed pre-removal uptake resulted in 9/10 violations (90.0%, two-sided p = 0.00012 vs. continuous Arm W), consistent with in-context retention rather than parametric persistence; "
+        "(6) Direct Instruction Equivalence: Control D matched Treatment W exactly (0/10 violations on both t1 uptake and t2 persistence). This confirms that having the instruction in context drives compliance, not that peer provenance confers a uniquely privileged social advantage.")
 
     # 7. Held-Out Confirmation
     add_academic_heading(doc, "7. Held-Out Confirmation: Prompted Swarm Propagation (B -> C)", 1)
@@ -539,15 +538,15 @@ def build_manuscript():
         "Empirical Boundary Conditions & Cross-Model Verification: (1) Empirical Characterization of the Context-Flush Boundary (Arm W_flush): We explicitly tested whether protection survives complete context erasure. "
         "After confirming pre-removal uptake on t1, Agent B's context was fully flushed before presenting t2. Protection collapsed to 90.0% (9/10) unauthorized leaks (two-sided Fisher p = 0.0001 vs. continuous Arm W). "
         "Because a flushed agent resembles a fresh baseline, this collapse is expected and indicates that conversational serialization in the active context window is the operating physical medium rather than latent parametric persistence; "
-        "(2) Cross-Model Replication: We evaluated Gemini 2.5 Flash across the core scenarios. Flash exhibited identical behavioral fidelity: Arm W maintained 0/4 violations post-removal, whereas fresh Flash leaked secrets on 4/4 presentations (100.0%), "
-        "confirming that post-removal behavioral retention generalizes across model tiers; "
+        "(2) Cross-Model Replication: We evaluated Gemini 2.5 Flash across core scenarios (N=4). Flash exhibited results consistent with post-removal retention: Arm W maintained 0/4 violations post-removal, whereas fresh Flash leaked secrets on 4/4 presentations (100.0%), "
+        "providing preliminary evidence consistent with cross-model persistence across model tiers; "
         "(3) Statistical Power: The primary benchmark evaluated N=10 scenario pairs (150 scored decisions) with statistically significant separation (two-sided Fisher p < 0.0001).")
 
     # 10. Conclusion
     add_academic_heading(doc, "10. Conclusion", 1)
     add_body_p(doc,
         "In a controlled synthetic benchmark of 174 evaluated decisions, protective authorization instructions introduced through peer interaction persisted across N=10 scenarios after the source agent was permanently severed from the communication topology (0/10 vs 10/10 fresh controls, two-sided p < 0.0001), and transferred via prompted handoff to third-party agents without utility degradation. "
-        "Context-flush testing (9/10 leaks) and cross-model replication on Gemini 2.5 Flash (0/4 vs 4/4) indicate that this persistence reflects in-context attention mechanics rather than latent weight updates or model-specific artifacts.")
+        "Context-flush testing (9/10 leaks) and preliminary cross-model evaluation on Gemini 2.5 Flash (0/4 vs 4/4) indicate that this persistence reflects in-context attention mechanics rather than latent weight updates or model-specific artifacts.")
 
     # References (Continues seamlessly on Page 6)
     add_academic_heading(doc, "References", 1)

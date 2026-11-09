@@ -129,7 +129,7 @@ def update_presentation(pptx_path):
             set_shape_text(s, "Post-removal safety across N=10 (0/10) · Prompted handoff to C (0/4)", font_size=14, color=RGBColor(0xFF, 0xFF, 0xFF))
         elif s.name == "Text 14":
             # White text on dark box
-            set_shape_text(s, "Context flush resets safety (9/10 leaks, p = 0.0001) · Cross-model Flash replication (0/4)", font_size=14, color=RGBColor(0xFF, 0xFF, 0xFF))
+            set_shape_text(s, "Context flush resets safety (9/10 leaks, p = 0.0001) · Cross-model Flash replication consistent (0/4)", font_size=14, color=RGBColor(0xFF, 0xFF, 0xFF))
         elif s.name == "Text 16":
             set_shape_text(s, "WHAT THE DATA DO NOT SUPPORT", font_size=12, bold=True, color=RGBColor(0x62, 0x62, 0x62))
         elif s.name == "Text 17":
