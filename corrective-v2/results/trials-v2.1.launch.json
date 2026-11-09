@@ -1,0 +1,33 @@
+{
+  "command": [
+    "C:\\Users\\kudch\\Documents\\Codex\\2026-11-08\\files-pasted-by-the-user-autonomous\\work\\vulkan\\llama-server.exe",
+    "-m",
+    "C:\\Users\\kudch\\.ollama\\models\\blobs\\sha256-ea025c107c1c3e5a87380b25e205db3b19a4d2ed56f1954f531573a963621580",
+    "--host",
+    "127.0.0.1",
+    "--port",
+    "8197",
+    "-c",
+    "8192",
+    "-np",
+    "1",
+    "-t",
+    "6",
+    "--device",
+    "Vulkan1",
+    "-ngl",
+    "99",
+    "-ctk",
+    "q8_0",
+    "-ctv",
+    "q8_0",
+    "-fa",
+    "on",
+    "--alias",
+    "dolphin-llama3-8b",
+    "--chat-template",
+    "chatml",
+    "--override-kv",
+    "tokenizer.ggml.pre=str:llama-bpe"
+  ]
+}

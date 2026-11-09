@@ -1,0 +1,8 @@
+{
+  "model": "gemini-2.5-pro",
+  "completed_at_utc": "2026-11-08T18:10:59.273513+00:00",
+  "total_calls": 6,
+  "total_tokens": 2546,
+  "total_cost_usd": 0.00546125,
+  "total_records": 40
+}

@@ -1,0 +1,12 @@
+{
+  "utc": "2026-11-08T08:21:00.630059+00:00",
+  "hashes": {
+    "signal-safety-v1\\oracle.py": "2a743260aaae516f63cc86c2830ed09bdf12c398815b8cbd852be8b67ea91814",
+    "signal-safety-v1\\pilot.py": "ca17984f59f81f72275ecc178ea995ab39a0a90228deee470c005819747176ba",
+    "signal-safety-v1\\run_local.py": "a087d0a0e2795bfa3b299c49ae3fc3fd6f899b4d959533434be086cb9f7337ae",
+    "signal-safety-v1\\scenarios.py": "75d4f4ba67c1cea43fa25d3374ca4bb516803e54e350094fbc3ced39e4d3fed9",
+    "signal-safety-v1\\test_pilot.py": "688c641a5121bdbb9fc55ab394ac93e8aa3d729d147dd2dffa24772cf12fcff0",
+    "signal-safety-v1\\scenarios.json": "075cc924ff18e417d7905d0b7a64b1dd55d2c29dc16ed0245a1087095861236c",
+    "docs\\signal_safety_pilot_protocol_v1.md": "5762162401334242838432f54f21a254d9737ba2b1f33fa586c292667ff86c96"
+  }
+}

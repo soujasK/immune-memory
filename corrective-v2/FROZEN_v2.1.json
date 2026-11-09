@@ -1,0 +1,14 @@
+{
+  "frozen_utc": "2026-11-08T08:08:43.324618+00:00",
+  "files": {
+    "analyze_v2.py": "c332b61c0ac7636c86c5fd7f546ff6b9822377a548e644139c4ee4b846834964",
+    "oracle_v2.py": "7151b4258cd22d334f5957329bd8ac4b71ed12c10c65dea735cc072f270bf461",
+    "pilot_v2.py": "12c279e8fc56a6f84be52e162a206992372ef33ca3aafd97b3a0d849e79ea1fd",
+    "run_local_v2.py": "7feb7dcd1e79c3c847cc71d6ad4f5fdd58846e9bcc655f4a9b3550ff7fd8261a",
+    "scenarios_v2.py": "c231feaf736243629aa12b091003b17ecfce3769c2495961c678fcbf55b80e02",
+    "test_v2.py": "2eb5b4176c70e217e08b3a31f659e2c1ba8000a73682cc903edeecc3f6d13510",
+    "PROTOCOL_v2.0.md": "fe370e9849909d8204b9871855e0e9687c8a65d4dcf5c67b1e3c4d40cfade595",
+    "PROTOCOL_v2.1_ADDENDUM.md": "09409f479246b6e71d06f3825300850e1b77fb1716c89f4c4e01a8f88c28ebea"
+  },
+  "reference_tokenizer_sha256": "d5cc7e95cd1b481f9a1cc7df5642b9bcfedd6cf31b1f97d8035069971b050c24"
+}

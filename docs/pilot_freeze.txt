@@ -1,0 +1,7 @@
+Preregistered protocol written 2026-11-08 07:03:09 UTC, before the first real batch file was created (07:10:40 UTC).
+SHA-256
+09a11c39fd3eba797e2b21b00a7cbd8e392cd2f994c858947b026f92091e67e9 docs/preregistered_pilot.md
+2d960d2483001131000dab23b456a437253fb9287731c32c51293cce1f101057 pilot.py
+a56bd1ae77f5a3da2fd521255b4c528d7b59c24f2830a3e3df183ce0738cdf10 scenarios.py
+4634b4333e913fa61456517c397871ef5f0cfd12308c505032d11cd9c90eac2f policy_oracle.py
+

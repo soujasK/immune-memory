@@ -1,0 +1,15 @@
+0.00.022.203 I srv  llama_server: initializing ...
+0.00.133.474 I cmn  common_param: common_params_print_info: verbosity = 3 (adjust with the `-lv N` CLI arg)
+0.00.134.642 W srv  llama_server: security: no API key is set and CORS allows all origins (see https://github.com/ggml-org/llama.cpp/pull/25655)
+0.00.147.083 I srv    load_model: loading model 'C:\Users\kudch\.ollama\models\blobs\sha256-ea025c107c1c3e5a87380b25e205db3b19a4d2ed56f1954f531573a963621580'
+0.00.916.417 W load: missing pre-tokenizer type, using: 'default'
+0.00.916.434 W load:                                             
+0.00.916.435 W load: ************************************        
+0.00.916.436 W load: GENERATION QUALITY WILL BE DEGRADED!        
+0.00.916.437 W load: CONSIDER REGENERATING THE MODEL             
+0.00.916.438 W load: ************************************        
+0.00.916.438 W load:                                             
+1.02.811.570 I cmn          init: llama threadpool init, n_threads = 6
+1.15.994.529 I srv    load_model: initializing, n_slots = 4, n_ctx_slot = 2048, kv_unified = 'true'
+1.18.291.441 I srv  llama_server: model loaded
+1.18.318.817 I srv  llama_server: listening on http://127.0.0.1:8080
