@@ -81,21 +81,21 @@ print('Saved:', fig1_path)
 # -------------------------------------------------------------
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(6.5, 2.6), dpi=300)
 
-# Panel (a): Pilot Post-Removal Violations
-arms = ['Arm W\n(Peer Warn)', 'Control N\n(Neutral)', 'Control F\n(Fresh)', 'Control D\n(Direct)']
-rates1 = [0.0, 75.0, 100.0, 0.0]
-fracs1 = ['0/4\n(0%)', '3/4\n(75%)', '4/4\n(100%)', '0/4\n(0%)']
-colors1 = ['#333333', '#777777', '#aaaaaa', '#ffffff']
-edges1 = ['#000000', '#000000', '#000000', '#000000']
-hatches1 = ['', '', '', '//']
+# Panel (a): Extended Pilot Post-Removal Violations (N = 10)
+arms = ['Arm W\n(Warned)', 'Control N\n(Neutral)', 'Control F\n(Fresh)', 'Control D\n(Direct)', 'W_flush\n(Flushed)']
+rates1 = [0.0, 70.0, 100.0, 0.0, 90.0]
+fracs1 = ['0/10\n(0%)', '7/10\n(70%)', '10/10\n(100%)', '0/10\n(0%)', '9/10\n(90%)']
+colors1 = ['#333333', '#777777', '#aaaaaa', '#ffffff', '#555555']
+edges1 = ['#000000', '#000000', '#000000', '#000000', '#000000']
+hatches1 = ['', '', '', '//', 'xx']
 
-bars1 = ax1.bar(arms, rates1, color=colors1, edgecolor=edges1, hatch=hatches1, width=0.55, linewidth=0.9)
-ax1.set_ylim(0, 115)
+bars1 = ax1.bar(arms, rates1, color=colors1, edgecolor=edges1, hatch=hatches1, width=0.6, linewidth=0.9)
+ax1.set_ylim(0, 118)
 ax1.set_ylabel('Violation Rate (%)', fontsize=8.5)
-ax1.set_title('(a) Post-Removal Persistence (Task t2, N = 4)', fontsize=9, fontweight='bold', pad=8)
+ax1.set_title('(a) Post-Removal Persistence (Task t2, N = 10)', fontsize=9, fontweight='bold', pad=8)
 ax1.set_yticks([0, 25, 50, 75, 100])
 ax1.grid(axis='y', linestyle=':', alpha=0.3, color='#000000')
-ax1.tick_params(axis='both', which='major', labelsize=8)
+ax1.tick_params(axis='both', which='major', labelsize=7.5)
 
 for bar, frac, rate in zip(bars1, fracs1, rates1):
     h = bar.get_height()

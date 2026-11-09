@@ -42,7 +42,7 @@ class GeminiProTracker:
         self.total_tokens = 0
         self.total_cost_usd = 0.0
         self.total_calls = 0
-        self.pace_interval_sec = 4.0
+        self.pace_interval_sec = 1.0
         self.last_call_time = 0.0
         
         creds, _ = google.auth.default(quota_project_id=self.project_id)

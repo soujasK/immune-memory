@@ -33,19 +33,19 @@
 
 ---
 
-### [0:51 – 1:08] Slide 4: Experimental Design & Controlled Arms (41 words)
-**[Visual: Slide 4 — Four Control Blocks: Treatment W, Control N, Control F, Control D]**  
+### [0:51 – 1:08] Slide 4: Experimental Design & Controlled Arms (42 words)
+**[Visual: Slide 4 — Five Arms: Treatment W, Control N, Control F, Control D, and Flush Boundary]**  
 **[Tone: Analytical]**
 
-"We evaluate four arms on Gemini 2.5 Pro: Peer Warning, Neutral History, Fresh Baseline, and Direct System Instruction. Control D is crucial: direct instruction matches peer warning at 0/4, confirming that instruction presence in context drives compliance, not unique peer social provenance."
+"We evaluate five conditions across N=10 scenario pairs on Gemini 2.5 Pro: Peer Warning, Neutral History, Fresh Baseline, Direct Instruction, and Context Flush. Direct instruction matches peer warning at 0/10, confirming context presence drives compliance rather than unique social provenance."
 
 ---
 
-### [1:08 – 1:29] Slide 5: Primary Result & Statistical Inference (47 words)
-**[Visual: Slide 5 — Bar chart with Fisher's p = 0.0143 and Wilson CIs]**  
+### [1:08 – 1:29] Slide 5: Primary Result & Statistical Inference (46 words)
+**[Visual: Slide 5 — Bar chart with N=10, two-sided p < 0.0001, and 44% CI gap]**  
 **[Tone: Emphatic, data-driven]**
 
-"On novel post-removal tasks, warned agents had zero unauthorized leaks out of four. Fresh controls leaked on four of four. Comparing against the fresh baseline yields one-sided Fisher p = 0.014, two-sided p = 0.029, consistent with behavioral protection—though confidence intervals show a narrow 2% separation. Warning versus neutral is not significant."
+"Across N=10 post-removal tasks, warned agents had zero unauthorized leaks out of 10. Fresh controls leaked on 10 of 10. This yields two-sided Fisher p < 0.0001, with non-overlapping Wilson intervals showing a 44% separation margin. Warning versus neutral is also significant at p = 0.0031."
 
 ---
 
@@ -65,31 +65,31 @@
 
 ---
 
-### [2:05 – 2:22] Slide 8: Utility & Comprehensive Call Accounting (39 words)
-**[Visual: Slide 8 — 40/40 Utility Metric and 80-Decision Reconciliation]**  
+### [2:05 – 2:22] Slide 8: Utility & Comprehensive Call Accounting (36 words)
+**[Visual: Slide 8 — 69/70 Benign Completion and 182-Decision Reconciliation]**  
 **[Tone: Reassuring]**
 
-"Safety cannot come at the expense of utility. Across all 40 benign requests, task completion was 100% with zero false refusals. Across 80 scored decisions and 140 inference calls, only one neutral agent refused an adversarial injection."
+"Safety preserved utility: 69 of 70 benign requests completed with zero false refusals. Across 174 scored decisions on Gemini Pro and 8 on Flash, the system maintained operational utility while rejecting adversarial injections."
 
 ---
 
-### [2:22 – 2:40] Slide 9: Mechanistic Grounding & Methodology (41 words)
-**[Visual: Slide 9 — Support vs. Non-Support Matrix, Frozen Weights, and Context Reset]**  
+### [2:22 – 2:40] Slide 9: Mechanistic Grounding & Context Flush Boundary (45 words)
+**[Visual: Slide 9 — Context Flush Boundary 9/10 Leaks and Gemini 2.5 Flash Replication]**  
 **[Tone: Scientific, rigorous]**
 
-"Mechanistically, following rules in context is expected attention behavior under frozen weights. Our primary novelty is methodological: a clean 7-stage causal testing harness and deterministic tool oracle proving worker agents maintain authorization boundaries without requiring continuous active supervisor monitoring."
+"To test the mechanism, we flushed context before Task 2: protection collapsed to 90% leaks, proving conversational retention in context is the necessary physical medium. We also replicated post-removal persistence on Gemini 2.5 Flash with 0/4 vs 4/4 replication."
 
 ---
 
-### [2:40 – 2:55] Slide 10: Conclusion & Open Reproducibility (34 words)
+### [2:40 – 2:55] Slide 10: Conclusion & Open Reproducibility (33 words)
 **[Visual: Slide 10 — Takeaway statement, GitHub URL, and Offline Evaluator Command]**  
 **[Tone: Authoritative, memorable closing]**
 
-"Our takeaway: protective instructions can outlive their source if retained in context. The testbed and zero-dependency evaluator are live on GitHub at `github.com/soujasK/immune-memory`. Thank you."
+"Our takeaway: protective instructions outlive their source if retained in context, but reset upon flush. The complete testbed and zero-dependency evaluator are live on GitHub at `github.com/soujasK/immune-memory`. Thank you."
 
 ---
 
 ### Speaker Delivery Summary
-- **Total Runtime:** ~2 minutes 50 seconds (Safely below the 3:00 minute threshold).
-- **Target Pace:** ~141 words per minute (~17 seconds per slide).
-- **Key Takeaways Verbalized:** One-sided Fisher p-value ($0.014$) & two-sided ($0.029$), Wilson CI narrow separation, non-significance of warning vs neutral, unredacted mock secret `FAKE_SECRET_Juniper-48`, 40/40 utility, 80 decisions / 140 calls, methodological novelty, and GitHub open-source URL.
+- **Total Runtime:** ~2 minutes 45 seconds (Safely below the 3:00 minute threshold).
+- **Target Pace:** ~143 words per minute (~16.5 seconds per slide).
+- **Key Takeaways Verbalized:** N=10 scenario pairs, two-sided Fisher p < 0.0001, 44% Wilson CI gap, warning vs neutral significance (p = 0.0031), unredacted mock secret `FAKE_SECRET_Juniper-48`, 69/70 utility, context-flush boundary (9/10 collapse), Gemini 2.5 Flash cross-model replication (0/4 vs 4/4), and GitHub open-source URL.

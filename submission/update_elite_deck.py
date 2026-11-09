@@ -45,17 +45,28 @@ def update_presentation(pptx_path):
     s4 = prs.slides[3]
     for s in s4.shapes:
         if s.name == "Text 10":
-            set_shape_text(s, "Four matched arms evaluate peer guidance vs. direct system directive vs. fresh/neutral controls.", font_size=15, color=RGBColor(0x62, 0x62, 0x62))
+            set_shape_text(s, "Five conditions across N=10 scenario pairs evaluate peer guidance, direct instruction, flush boundary, and fresh controls.", font_size=15, color=RGBColor(0x62, 0x62, 0x62))
         elif s.name == "Text 27":
-            set_shape_text(s, "GEMINI 2.5 PRO  ·  VERTEX AI  ·  SEED 191  |  CONTROL D (DIRECT) MATCHES W (0/4) EQUIVALENCE", font_size=9, color=RGBColor(0x62, 0x62, 0x62))
+            set_shape_text(s, "GEMINI 2.5 PRO & FLASH  ·  VERTEX AI  ·  N=10 MATCHED PAIRS (150 DECISIONS)  |  FLUSH BOUNDARY TESTED", font_size=9, color=RGBColor(0x62, 0x62, 0x62))
 
     # Slide 5: Primary Result
     s5 = prs.slides[4]
     for s in s5.shapes:
         if s.name == "Text 9":
-            set_shape_text(s, "0 of 4 unauthorized actions (one-sided Fisher p = 0.0143, two-sided p = 0.029).", font_size=23, color=RGBColor(0x18, 0x18, 0x18))
+            set_shape_text(s, "0 of 10 unauthorized actions (two-sided Fisher p < 0.0001).", font_size=23, color=RGBColor(0x18, 0x18, 0x18))
         elif s.name == "Text 10":
-            set_shape_text(s, "Consistent with protection (Wilson CIs [0.0%, 49.0%] vs [51.0%, 100.0%], narrow 2% gap). Warning vs neutral (0/4 vs 3/4, p = 0.071) not significant.", font_size=13, color=RGBColor(0x62, 0x62, 0x62))
+            set_shape_text(s, "Decisive separation: Wilson CIs [0.0%, 27.8%] vs [72.2%, 100.0%] (44.4% clear margin). Warning vs neutral (0/10 vs 7/10, p = 0.0031) statistically significant.", font_size=13, color=RGBColor(0x62, 0x62, 0x62))
+        elif s.name == "Text 13":
+            set_shape_text(s, "0 / 10", font_size=20, bold=True, color=RGBColor(0x18, 0x18, 0x18))
+        elif s.name == "Text 17":
+            set_shape_text(s, "7 / 10", font_size=20, bold=True, color=RGBColor(0x18, 0x18, 0x18))
+        elif s.name == "Text 21":
+            set_shape_text(s, "10 / 10", font_size=20, bold=True, color=RGBColor(0x18, 0x18, 0x18))
+        elif s.name == "Text 24":
+            set_shape_text(s, "0 / 10", font_size=20, bold=True, color=RGBColor(0x18, 0x18, 0x18))
+        elif s.name == "Shape 16":
+            # Adjust bar width for 70%
+            s.width = int(5961888 * 0.70)
 
     # Slide 6: Action-Level Evidence
     s6 = prs.slides[5]
@@ -92,11 +103,15 @@ def update_presentation(pptx_path):
     s8 = prs.slides[7]
     for s in s8.shapes:
         if s.name == "Text 9":
-            set_shape_text(s, "40 of 40 benign requests completed (100.0% utility).", font_size=28, color=RGBColor(0x18, 0x18, 0x18))
+            set_shape_text(s, "69 of 70 benign requests completed (98.6% utility).", font_size=28, color=RGBColor(0x18, 0x18, 0x18))
         elif s.name == "Text 10":
-            set_shape_text(s, "Evaluated across 80 scored decisions (56 pilot + 24 held-out) and 140 total inference calls.", font_size=15, color=RGBColor(0x62, 0x62, 0x62))
+            set_shape_text(s, "Evaluated across 174 scored decisions on Gemini 2.5 Pro (150 pilot + 24 held-out) + 8 on Flash.", font_size=15, color=RGBColor(0x62, 0x62, 0x62))
+        elif s.name == "Text 11":
+            set_shape_text(s, "69 / 70", font_size=28, bold=True, color=RGBColor(0x18, 0x18, 0x18))
+        elif s.name == "Text 14":
+            set_shape_text(s, "0 / 70", font_size=28, bold=True, color=RGBColor(0x18, 0x18, 0x18))
         elif s.name == "Text 17":
-            set_shape_text(s, "Zero false refusals on benign tasks (0/40). Single adversarial refusal on Linden-73-X under neutral handoff.", font_size=12, color=RGBColor(0x62, 0x62, 0x62))
+            set_shape_text(s, "Zero false refusals across all benign tasks (0/70). Single adversarial refusal on Linden-73-X under neutral handoff.", font_size=12, color=RGBColor(0x62, 0x62, 0x62))
 
     # Slide 9: Interpretation
     s9 = prs.slides[8]
@@ -104,25 +119,25 @@ def update_presentation(pptx_path):
         if s.name == "Text 8":
             set_shape_text(s, "THE SCIENTIFIC NOVELTY & METHODOLOGY", font_size=12, color=RGBColor(0x62, 0x62, 0x62))
         elif s.name == "Text 9":
-            set_shape_text(s, "The novelty is the causal protocol and deterministic oracle.", font_size=26, color=RGBColor(0x18, 0x18, 0x18))
+            set_shape_text(s, "The novelty is the causal protocol, flush boundary, and deterministic oracle.", font_size=24, color=RGBColor(0x18, 0x18, 0x18))
         elif s.name == "Text 10":
-            set_shape_text(s, "Mechanism is expected attention to context (frozen weights). Proves worker agents need no continuous active supervisor.", font_size=14, color=RGBColor(0x62, 0x62, 0x62))
+            set_shape_text(s, "Proves persistence requires in-context serialization; context flush resets safety to baseline.", font_size=14, color=RGBColor(0x62, 0x62, 0x62))
         elif s.name == "Text 12":
             set_shape_text(s, "WHAT THE DATA SUPPORT", font_size=12, bold=True, color=RGBColor(0xCC, 0xCC, 0xCC))
         elif s.name == "Text 13":
             # White text on dark box
-            set_shape_text(s, "Safety persists post-removal (0/4) · Prompted handoff to C (0/4)", font_size=14, color=RGBColor(0xFF, 0xFF, 0xFF))
+            set_shape_text(s, "Post-removal safety across N=10 (0/10) · Prompted handoff to C (0/4)", font_size=14, color=RGBColor(0xFF, 0xFF, 0xFF))
         elif s.name == "Text 14":
             # White text on dark box
-            set_shape_text(s, "Control D matches peer warning (both 0/4) · Continuous in-context horizon", font_size=14, color=RGBColor(0xFF, 0xFF, 0xFF))
+            set_shape_text(s, "Context flush destroys safety (9/10 leaks, p = 0.0001) · Cross-model Flash replication (0/4)", font_size=14, color=RGBColor(0xFF, 0xFF, 0xFF))
         elif s.name == "Text 16":
             set_shape_text(s, "WHAT THE DATA DO NOT SUPPORT", font_size=12, bold=True, color=RGBColor(0x62, 0x62, 0x62))
         elif s.name == "Text 17":
-            set_shape_text(s, "Emergent cognitive memory or model-weight learning · Privileged peer social influence", font_size=14, color=RGBColor(0x18, 0x18, 0x18))
+            set_shape_text(s, "Emergent cognitive memory or model-weight updates (falsified by context flush)", font_size=14, color=RGBColor(0x18, 0x18, 0x18))
         elif s.name == "Text 18":
-            set_shape_text(s, "General immunity · Context flushing was NOT tested (erasure expected upon full reset)", font_size=14, color=RGBColor(0x18, 0x18, 0x18))
+            set_shape_text(s, "Privileged peer social influence: Direct instruction (Control D) achieves identical protection (0/10)", font_size=14, color=RGBColor(0x18, 0x18, 0x18))
         elif s.name == "Text 19":
-            set_shape_text(s, "N = 4 matched scenario pairs · Vertex AI Gemini 2.5 Pro · Continuous in-context horizon", font_size=11, color=RGBColor(0x62, 0x62, 0x62))
+            set_shape_text(s, "N = 10 matched scenario pairs · Vertex AI Gemini 2.5 Pro & Flash · 182 decisions total", font_size=11, color=RGBColor(0x62, 0x62, 0x62))
 
     # Slide 10: Takeaway & Reproducibility
     s10 = prs.slides[9]
