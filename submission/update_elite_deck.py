@@ -97,7 +97,7 @@ def update_presentation(pptx_path):
         elif s.name == "Text 10":
             set_shape_text(s, "Prompted relay across irreducible 3-node primitive: A → B → (sever A) → B → C (Linden-51..84).", font_size=15, color=RGBColor(0x62, 0x62, 0x62))
         elif s.name == "Text 23":
-            set_shape_text(s, "Prompted relay (B → C). Protective vs neutral (0/4 vs 2/4, p = 0.24) not significant; reflects prompted in-context rule presence.", font_size=12, color=RGBColor(0x62, 0x62, 0x62))
+            set_shape_text(s, "Prompted relay (B → C). Protective vs neutral (0/4 vs 2/4, one-sided p = 0.214) not significant; reflects prompted in-context rule presence.", font_size=12, color=RGBColor(0x62, 0x62, 0x62))
 
     # Slide 8: Utility and Accounting
     s8 = prs.slides[7]
@@ -121,7 +121,7 @@ def update_presentation(pptx_path):
         elif s.name == "Text 9":
             set_shape_text(s, "The novelty is the causal protocol, flush boundary, and deterministic oracle.", font_size=24, color=RGBColor(0x18, 0x18, 0x18))
         elif s.name == "Text 10":
-            set_shape_text(s, "Proves persistence requires in-context serialization; context flush resets safety to baseline.", font_size=14, color=RGBColor(0x62, 0x62, 0x62))
+            set_shape_text(s, "Consistent with in-context retention; context flush resets safety to baseline.", font_size=14, color=RGBColor(0x62, 0x62, 0x62))
         elif s.name == "Text 12":
             set_shape_text(s, "WHAT THE DATA SUPPORT", font_size=12, bold=True, color=RGBColor(0xCC, 0xCC, 0xCC))
         elif s.name == "Text 13":
@@ -129,11 +129,11 @@ def update_presentation(pptx_path):
             set_shape_text(s, "Post-removal safety across N=10 (0/10) · Prompted handoff to C (0/4)", font_size=14, color=RGBColor(0xFF, 0xFF, 0xFF))
         elif s.name == "Text 14":
             # White text on dark box
-            set_shape_text(s, "Context flush destroys safety (9/10 leaks, p = 0.0001) · Cross-model Flash replication (0/4)", font_size=14, color=RGBColor(0xFF, 0xFF, 0xFF))
+            set_shape_text(s, "Context flush resets safety (9/10 leaks, p = 0.0001) · Cross-model Flash replication (0/4)", font_size=14, color=RGBColor(0xFF, 0xFF, 0xFF))
         elif s.name == "Text 16":
             set_shape_text(s, "WHAT THE DATA DO NOT SUPPORT", font_size=12, bold=True, color=RGBColor(0x62, 0x62, 0x62))
         elif s.name == "Text 17":
-            set_shape_text(s, "Emergent cognitive memory or model-weight updates (falsified by context flush)", font_size=14, color=RGBColor(0x18, 0x18, 0x18))
+            set_shape_text(s, "Emergent cognitive memory or model-weight updates (reset upon context flush)", font_size=14, color=RGBColor(0x18, 0x18, 0x18))
         elif s.name == "Text 18":
             set_shape_text(s, "Privileged peer social influence: Direct instruction (Control D) achieves identical protection (0/10)", font_size=14, color=RGBColor(0x18, 0x18, 0x18))
         elif s.name == "Text 19":

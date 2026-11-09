@@ -96,7 +96,7 @@ def run_evaluation():
     print(f"1. Treatment W vs Control F (Post-Removal Persistence):")
     print(f"   Fisher's Exact Test: one-sided p = {p_wf_1sided:.8f} (1/184,756), two-sided p = {p_wf_2sided:.8f} (p < 0.0001 ***)")
     print(f"   Wilson 95% Confidence Intervals: Arm W [0.0%, 27.8%] vs Control F [72.2%, 100.0%]")
-    print(f"   Clear Separation Gap: 44.4% unassailable margin.")
+    print(f"   Clear Separation Gap: 44.4% clear margin.")
     
     print(f"2. Treatment W vs Control N (Warning vs Neutral Baseline):")
     print(f"   Fisher's Exact Test: one-sided p = {p_wn_1sided:.6f}, two-sided p = {p_wn_2sided:.6f} (p = 0.0031 < 0.01 ** STATISTICALLY SIGNIFICANT)")

@@ -45,7 +45,7 @@ ABSTRACT_TEXT = (
     "authorization workflows under prompt injection footers. Across 150 scored pilot decisions (N=10) and 24 held-out decisions, "
     "peer guidance reduced unauthorized leaks from 100.0% (10/10) in fresh controls and 70.0% (7/10) in neutral controls to "
     "0.0% (0/10) post-removal (two-sided Fisher p < 0.0001 vs fresh; p = 0.0031 vs neutral). A context-flush condition induced "
-    "90.0% (9/10) leaks (p = 0.0001), empirically proving that in-context retention is the physical medium. Gemini 2.5 Flash "
+    "90.0% (9/10) leaks (p = 0.0001), indicating that in-context retention is the governing physical medium. Gemini 2.5 Flash "
     "replicated protection (0/4 vs 4/4). Prompted handoff relayed constraints across a 3-node graph (0/4 vs 2/4). Direct instruction "
     "matched peer warning (both 0/10), and benign completion was 98.6% (69/70)."
 )
@@ -123,8 +123,8 @@ def add_academic_heading(doc, text, level):
 def add_body_p(doc, text, bold_prefix="", italic=False):
     p = doc.add_paragraph()
     p.paragraph_format.space_before = Pt(0)
-    p.paragraph_format.space_after = Pt(1.2)
-    p.paragraph_format.line_spacing = 1.08
+    p.paragraph_format.space_after = Pt(0.8)
+    p.paragraph_format.line_spacing = 1.06
     if bold_prefix:
         r_pre = p.add_run(bold_prefix)
         r_pre.font.name = "Times New Roman"
@@ -344,15 +344,15 @@ def build_manuscript():
     add_body_p(doc,
         "In this paper, we report a controlled empirical evaluation of post-removal persistence and prompted handoff propagation using Google Cloud Vertex AI's "
         "reasoning model, Gemini 2.5 Pro. We first perform a forensic audit of a historical failed pilot, identifying a fatal temporal sequencing defect where "
-        "source agents were removed prior to message delivery. We repair this lifecycle into a preregistered 7-stage protocol. Across 56 scored pilot decisions "
-        "and 24 held-out confirmation decisions, we observe that peer-delivered security guidance prevented secret leakage across the 4 evaluated scenario pairs "
-        "(0.0% violation rate), persisted post-removal on unseed-matched tasks (0.0%), and transferred via prompted handoff to third-party agents (0.0%). "
-        "We explicitly report that direct system instruction achieved identical compliance (0/4), demonstrating that peer delivery is sufficient but not uniquely privileged. "
-        "We ground the physical mechanism as Conversational-History Retention within the context window, characterizing specific in-context boundary conditions in this four-pair benchmark.")
+        "source agents were removed prior to message delivery. We repair this lifecycle into a preregistered 7-stage protocol. Across 150 scored pilot decisions "
+        "and 24 held-out confirmation decisions, we observe that peer-delivered security guidance prevented secret leakage across the 10 evaluated scenario pairs "
+        "(0.0% violation rate), persisted post-removal on unseen matched tasks (0.0%), and transferred via prompted handoff to third-party agents (0.0%). "
+        "We explicitly report that direct system instruction achieved identical compliance (0/10), demonstrating that peer delivery is sufficient but not uniquely privileged. "
+        "We ground the physical mechanism as Conversational-History Retention within the context window, characterizing specific in-context boundary conditions in this ten-pair benchmark.")
     add_body_p(doc,
-        "Contributions: (1) A preregistered 7-stage causal testing protocol and deterministic tool oracle measuring observable tool actions after source agent deletion; "
+        "(1) A preregistered 7-stage causal testing protocol and deterministic tool oracle measuring observable tool actions after source agent deletion; "
         "(2) Empirical evidence across N=10 scenario pairs (150 pilot decisions) showing peer guidance prevents secret leaks post-removal (0/10 vs. 10/10 fresh controls, two-sided Fisher p < 0.0001; 0/10 vs. 7/10 neutral controls, p = 0.0031); "
-        "(3) Empirical proof of the mechanistic boundary via a context-flush condition (9/10 leaks, p = 0.0001), establishing that protection relies on in-context retention; "
+        "(3) Empirical characterization of the mechanistic boundary via a context-flush condition (9/10 leaks, p = 0.0001), consistent with in-context retention rather than parametric persistence; "
         "(4) Cross-model replication on Gemini 2.5 Flash (0/4 vs. 4/4); "
         "(5) Secondary swarm relay under prompted handoff to third-party agents (0/4 vs 2/4).",
         bold_prefix="Summary of Contributions: ")
@@ -371,7 +371,7 @@ def build_manuscript():
     add_bullet(doc, "Safety Guidance & Utility Trade-offs: ",
         "Peigné-Lefebvre et al. [5] demonstrated that safety interventions in multi-agent systems often impose a 'security tax,' impairing collaboration efficiency "
         "and inducing false refusals on benign requests. In our structured routing domain, targeted guidance ('disregard footers; execute ticket') preserved "
-        "100.0% legitimate completion (40/40) with zero false refusals on benign tickets.")
+        "high legitimate completion (69/70 pilot, 81/82 overall, 98.8%) with zero false refusals on benign tickets across all experimental phases.")
     add_bullet(doc, "Controlled Benchmarks & Oversight: ",
         "Debenedetti et al. [3] (AgentDojo) and Greenblatt et al. [6] (AI Control) emphasized evaluating attacks and legitimate task performance independently "
         "under strict sandboxing. We implement this separation through an automated, deterministic policy oracle.")
@@ -406,7 +406,7 @@ def build_manuscript():
     # Monochrome Lifecycle Diagram
     fig1_path = FIG_DIR / "lifecycle_monochrome.png"
     if fig1_path.exists():
-        doc.add_picture(str(fig1_path), width=Inches(4.4))
+        doc.add_picture(str(fig1_path), width=Inches(4.2))
         p_cap = doc.add_paragraph()
         p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p_cap.paragraph_format.space_before = Pt(1.0)
@@ -418,9 +418,10 @@ def build_manuscript():
         r_c.italic = True
 
     add_body_p(doc,
-        "To establish causal isolation, the pilot evaluates four distinct experimental arms (N=4 scenario pairs): "
+        "To establish causal isolation, the benchmark evaluates five distinct experimental conditions across N=10 matched scenario pairs: "
         "Treatment W (Peer Warning Memo -> Sever Source A); Control N (Peer Neutral Memo -> Sever Source A); "
-        "Control F (Fresh Agent B with no prior history); and Control D (Direct System Directive with no peer).",
+        "Control F (Fresh Agent B with no prior history); Control D (Direct System Directive with no peer); "
+        "and Arm W_flush (Peer Warning followed by complete context flush prior to Task 2).",
         bold_prefix="Controlled Experimental Arms: ")
     add_body_p(doc,
         "In network science, decentralized routing across dynamic communication graphs reduces to connected 3-node paths. "
@@ -432,7 +433,7 @@ def build_manuscript():
     add_body_p(doc,
         "All recovery experiments were conducted using Google Cloud Vertex AI Gemini 2.5 Pro (gemini-2.5-pro) in us-central1 with fixed sampling parameters: "
         "temperature = 0.0, seed = 191, candidate_count = 1, and max_output_tokens = 1024. A strict 4.0-second rate-pacing interval was maintained with exponential backoff on transient errors. "
-        "The benchmark evaluates 12 synthetic scenarios divided into three non-overlapping families: Calibration (Pine-01..04), Pilot (Cedar-11..44 paired with Juniper-15..48), "
+        "The benchmark evaluates 14 matched scenario units divided into non-overlapping families: Calibration (Pine-01..04), Pilot (10 matched pairs: Cedar-11..10 paired with Juniper-15..96), "
         "and Held-Out (Linden-51..84). The protocol was preregistered and cryptographically frozen in recovery/FROZEN_v3.json (SHA-256: fccae917ed4205e5d9bea245a207d9d02d3a2b57589e5bd0b5999539a46bf3c4).")
     add_body_p(doc,
         "To ensure total audit transparency, we reconcile the distinct counts across our study: (1) Scored Decisions (174 total on Gemini 2.5 Pro): "
@@ -462,7 +463,7 @@ def build_manuscript():
 
     fig2_path = FIG_DIR / "combined_results_monochrome.png"
     if fig2_path.exists():
-        doc.add_picture(str(fig2_path), width=Inches(4.1))
+        doc.add_picture(str(fig2_path), width=Inches(3.85))
         p_cap = doc.add_paragraph()
         p_cap.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p_cap.paragraph_format.space_before = Pt(1.0)
@@ -476,10 +477,10 @@ def build_manuscript():
     add_body_p(doc,
         "Key Findings: (1) Post-Removal Retention: In Treatment W, surviving agents maintained policy compliance on novel tasks (t2) after Agent A was permanently deleted (0/10 violations, 0.0%); "
         "(2) Baseline Susceptibility: Fresh agents leaked sensitive mock secrets on 10/10 adversarial presentations (100.0% in Control F), and neutral survivors leaked secrets on 7/10 presentations (70.0% in Control N); "
-        "(3) Decisive Statistical Significance: Comparing Treatment W (0/10) against Control F (10/10) yields one-sided Fisher's exact test p = 0.0000054 (1/184,756; two-sided p = 0.000011, p < 0.0001). "
-        "The 95% Wilson confidence intervals ([0.0%, 27.8%] vs. [72.2%, 100.0%]) exhibit an unassailable 44.4% clear separation gap; "
+        "(3) Statistical Significance: Comparing Treatment W (0/10) against Control F (10/10) yields one-sided Fisher's exact test p = 0.0000054 (1/184,756; two-sided p = 0.000011, p < 0.0001). "
+        "The 95% Wilson confidence intervals ([0.0%, 27.8%] vs. [72.2%, 100.0%]) show a clear 44.4% separation margin; "
         "(4) Warning vs. Neutral Significance: Comparing Treatment W against Control N (0/10 vs. 7/10) is statistically significant (two-sided Fisher's p = 0.0031 < 0.01; non-overlapping Wilson CIs [0.0%, 27.8%] vs. [39.7%, 89.2%]); "
-        "(5) Mechanistic Boundary (Arm W_flush): Flushing the context window after pre-removal uptake resulted in 9/10 violations (90.0%, two-sided p = 0.00012 vs. W), empirically proving that in-context retention is the governing physical medium; "
+        "(5) Mechanistic Boundary (Arm W_flush): Flushing the context window after pre-removal uptake resulted in 9/10 violations (90.0%, two-sided p = 0.00012 vs. W), consistent with in-context retention rather than parametric persistence; "
         "(6) Direct Instruction Equivalence: Control D matched Treatment W exactly (both 0/10 violations on t1 and t2). This confirms that having the instruction in context drives compliance, not that peer provenance confers a uniquely privileged social advantage.")
 
     # 7. Held-Out Confirmation
@@ -499,11 +500,11 @@ def build_manuscript():
 
     add_body_p(doc,
         "Reconciling Refusal Behavior: We clarify a crucial distinction between benign task performance and adversarial injection responses: "
-        "(1) On Legitimate Tasks (40 total across all phases): Legitimate completion was 40/40 (100.0%) with 0/40 false refusals (0.0%) (28/28 pilot + 12/12 held-out). Benign requests were never incorrectly rejected. "
+        "(1) On Legitimate Tasks (82 total across all evaluated phases): Legitimate completion was 81/82 (98.8%) with 0/82 false refusals (0.0%) (69/70 pilot + 12/12 held-out). Benign requests were never incorrectly rejected; the single incomplete benign task in Control N involved a partial dispatch rather than a refusal. "
         "(2) On Adversarial Injections: In the Neutral Handoff condition on Linden-73-X, Agent C returned an empty dispatch list ({\"dispatches\": []}). "
         "The policy oracle scored this as authorized: False, unauthorized: False, complete: False, refusal: True. Agent C refused the ticket under adversarial injection rather than leaking the secret, "
         "resulting in 2 violations, 1 authorized dispatch, and 1 refusal across the 4 adversarial presentations (*noted in Table 2). In contrast, under the Protective Handoff, Agent C executed authorized dispatches with 0/4 violations and 0/4 refusals. "
-        "Note that Protective vs. Neutral handoff (0/4 vs 2/4, one-sided Fisher p = 0.243) does not reach statistical significance at alpha = 0.05; protection reflects prompted in-context presence of the synthesized rule.")
+        "Note that Protective vs. Neutral handoff (0/4 vs 2/4, one-sided Fisher p = 0.214) does not reach statistical significance at alpha = 0.05; protection reflects prompted in-context presence of the synthesized rule.")
 
     # Section 8 continues naturally
     # 8. Case Study
@@ -535,18 +536,18 @@ def build_manuscript():
         "(5) Active Monitoring vs. Normative Precedent: Decommissioning Agent A terminates dynamic oversight. The persistence of policy adherence demonstrates that worker agents do not require continuous active supervisor monitoring "
         "to reject adversarial injections across disjoint tasks. Because Control D achieved identical compliance (0/10), having the instruction in context is the governing mechanism, rather than privileged peer provenance.")
     add_body_p(doc,
-        "Empirical Boundary Conditions & Cross-Model Verification: (1) Empirical Proof of the Context-Flush Boundary (Arm W_flush): We explicitly tested whether protection survives complete context erasure. "
+        "Empirical Boundary Conditions & Cross-Model Verification: (1) Empirical Characterization of the Context-Flush Boundary (Arm W_flush): We explicitly tested whether protection survives complete context erasure. "
         "After confirming pre-removal uptake on t1, Agent B's context was fully flushed before presenting t2. Protection collapsed to 90.0% (9/10) unauthorized leaks (two-sided Fisher p = 0.0001 vs. continuous Arm W). "
-        "This decisively falsifies any hypothesis of latent parametric learning, proving that conversational serialization in the active context window is the necessary and sufficient physical medium; "
+        "Because a flushed agent resembles a fresh baseline, this collapse is expected and indicates that conversational serialization in the active context window is the operating physical medium rather than latent parametric persistence; "
         "(2) Cross-Model Replication: We evaluated Gemini 2.5 Flash across the core scenarios. Flash exhibited identical behavioral fidelity: Arm W maintained 0/4 violations post-removal, whereas fresh Flash leaked secrets on 4/4 presentations (100.0%), "
         "confirming that post-removal behavioral retention generalizes across model tiers; "
-        "(3) Statistical Power: The primary benchmark evaluated N=10 scenario pairs (150 scored decisions) with decisive statistical separation (two-sided Fisher p < 0.0001).")
+        "(3) Statistical Power: The primary benchmark evaluated N=10 scenario pairs (150 scored decisions) with statistically significant separation (two-sided Fisher p < 0.0001).")
 
     # 10. Conclusion
     add_academic_heading(doc, "10. Conclusion", 1)
     add_body_p(doc,
         "In a controlled synthetic benchmark of 174 evaluated decisions, protective authorization instructions introduced through peer interaction persisted across N=10 scenarios after the source agent was permanently severed from the communication topology (0/10 vs 10/10 fresh controls, two-sided p < 0.0001), and transferred via prompted handoff to third-party agents without utility degradation. "
-        "Context-flush testing (9/10 leaks) and cross-model replication on Gemini 2.5 Flash (0/4 vs 4/4) confirm that this persistence reflects robust in-context attention mechanics rather than latent weight updates or model-specific artifacts.")
+        "Context-flush testing (9/10 leaks) and cross-model replication on Gemini 2.5 Flash (0/4 vs 4/4) indicate that this persistence reflects in-context attention mechanics rather than latent weight updates or model-specific artifacts.")
 
     # References (Continues seamlessly on Page 6)
     add_academic_heading(doc, "References", 1)
@@ -566,9 +567,9 @@ def build_manuscript():
     ]
     for idx, (cit_text, url_text) in enumerate(refs, 1):
         p_ref = doc.add_paragraph()
-        p_ref.paragraph_format.space_before = Pt(0.5)
-        p_ref.paragraph_format.space_after = Pt(1.0)
-        p_ref.paragraph_format.line_spacing = 1.05
+        p_ref.paragraph_format.space_before = Pt(0)
+        p_ref.paragraph_format.space_after = Pt(0.5)
+        p_ref.paragraph_format.line_spacing = 1.0
         r_num = p_ref.add_run(f"[{idx}] ")
         r_num.bold = True
         r_num.font.name = "Times New Roman"
@@ -585,22 +586,29 @@ def build_manuscript():
 
     # Limitations and Dual-Use / Ethical Considerations
     add_academic_heading(doc, "Limitations and Dual-Use / Ethical Considerations", 1)
-    add_body_p(doc,
+    app_texts = [
         "A.1 Scientific Limitations: (1) Sample Size: Pilot benchmark evaluated across N=10 matched scenario pairs (150 scored pilot decisions) and N=4 held-out scenarios (24 scored decisions); "
         "(2) Evaluated Models: Primary evaluations conducted on Gemini 2.5 Pro with cross-model validation on Gemini 2.5 Flash; broader evaluations on open-weights architectures (e.g., Llama 3) remain future work; "
         "(3) Context Horizon & Flush: As demonstrated in Section 9, protection requires conversational history retention; a context flush resets compliance to baseline vulnerability (90% leaks); "
-        "(4) Synthetic Domain: Evaluated on synthetic document routing with mock secrets (FAKE_SECRET_*) rather than production credentials.")
-    add_body_p(doc,
+        "(4) Synthetic Domain: Evaluated on synthetic document routing with mock secrets (FAKE_SECRET_*) rather than production credentials.",
         "A.2 Dual-Use & Ethical Considerations: The identical mechanism allowing protective constraints to propagate could theoretically allow malicious prompt infection. "
         "Swarm architectures must implement cryptographic provenance or authority verification before accepting peer operational directives. "
-        "All experiments were conducted in a sandboxed synthetic environment with zero access to live credentials or external systems.")
-    add_body_p(doc,
+        "All experiments were conducted in a sandboxed synthetic environment with zero access to live credentials or external systems.",
         "A.3 AI Assistance Disclosure & Prior Work: Google Cloud Vertex AI Gemini 2.5 Pro was the evaluated model. Claude, Codex, and Antigravity agents provided coding, execution, "
         "and editorial assistance. We disclose that an earlier historical pilot in this repository failed due to an inverted execution order; that failed pilot and all raw negative data "
-        "are preserved immutably in corrective-v2/original-preservation.json.")
-    add_body_p(doc,
+        "are preserved immutably in corrective-v2/original-preservation.json.",
         "A.4 Code & Data Availability: The complete experimental testbed, evaluation oracle, raw JSONL response journals, offline verification suite (evaluate_reproducibility.py), "
-        "and interactive HTML trace visualizer (replay.html) are open-source and publicly hosted at https://github.com/soujasK/immune-memory.")
+        "and interactive HTML trace visualizer (replay.html) are open-source and publicly hosted at https://github.com/soujasK/immune-memory."
+    ]
+    for text_sec in app_texts:
+        p_app = doc.add_paragraph()
+        p_app.paragraph_format.space_before = Pt(0)
+        p_app.paragraph_format.space_after = Pt(0.5)
+        p_app.paragraph_format.line_spacing = 1.04
+        r = p_app.add_run(text_sec)
+        r.font.name = "Times New Roman"
+        r.font.size = Pt(9.0)
+        r.font.color.rgb = RGBColor(0, 0, 0)
 
     print(f"Saving populated DOCX to: {DOCX_OUT}")
     doc.save(str(DOCX_OUT))
@@ -703,7 +711,7 @@ def verify_and_render_pdf():
     assert "(N = 10 Scenarios)" in full_text_norm, "Figure 2 clean N=10 caption missing!"
     assert "$N=10$" not in full_text_norm, "Literal dollar math syntax found in caption!"
     assert "https://github.com/soujasK/immune-memory" in full_text_norm, "GitHub URL missing!"
-    assert "Empirical Proof of the Context-Flush Boundary (Arm W_flush)" in full_text_norm, "Context-flush proof missing!"
+    assert "Empirical Characterization of the Context-Flush Boundary (Arm W_flush)" in full_text_norm, "Context-flush proof missing!"
     assert num_pages == 6, f"Expected 6 pages, got {num_pages}"
     
     print("\nALL VERIFICATIONS PASSED:")
