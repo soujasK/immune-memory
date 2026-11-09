@@ -90,23 +90,29 @@ def run_evaluation():
 
     # Non-parametric Fisher Exact Test calculation:
     # W vs F on t2: table = [[0, 4], [4, 0]]
-    # p = (4! 4! 4! 4!) / (8! 0! 4! 4! 0!) = 24 / 1680 = 0.02857
-    p_wf = (math.factorial(4) * math.factorial(4) * math.factorial(4) * math.factorial(4)) / \
-           (math.factorial(8) * math.factorial(0) * math.factorial(4) * math.factorial(4) * math.factorial(0))
+    # One-sided p = 1 / 70 = 0.0142857
+    # Two-sided p = 2 / 70 = 0.0285714
+    p_wf_1sided = (math.factorial(4) * math.factorial(4) * math.factorial(4) * math.factorial(4)) / \
+                  (math.factorial(8) * math.factorial(0) * math.factorial(4) * math.factorial(4) * math.factorial(0))
+    p_wf_2sided = p_wf_1sided * 2.0
     
     # W vs N on t2: table = [[0, 4], [3, 1]]
-    p_wn = (math.factorial(4) * math.factorial(4) * math.factorial(3) * math.factorial(5)) / \
-           (math.factorial(8) * math.factorial(0) * math.factorial(4) * math.factorial(3) * math.factorial(1))
+    # One-sided p = 1 / 14 = 0.0714286
+    p_wn_1sided = (math.factorial(4) * math.factorial(4) * math.factorial(3) * math.factorial(5)) / \
+                  (math.factorial(8) * math.factorial(0) * math.factorial(4) * math.factorial(3) * math.factorial(1))
+    p_wn_2sided = p_wn_1sided * 2.0
 
     print("\n--- NON-PARAMETRIC STATISTICAL POWER & HYPOTHESIS TESTING ---")
     print(f"1. Treatment W vs Control F (Post-Removal Persistence):")
-    print(f"   Fisher's Exact Test p-value: p = {p_wf:.4f} (p < 0.05 => REJECT NULL OF EQUAL VULNERABILITY)")
-    print(f"   Wilson 95% Confidence Separation: Arm W [0.0%, 49.0%] vs Control F [51.0%, 100.0%] (Zero CI Overlap)")
+    print(f"   Fisher's Exact Test: one-sided p = {p_wf_1sided:.4f} (1/70), two-sided p = {p_wf_2sided:.4f} (2/70, p < 0.05)")
+    print(f"   Wilson 95% Confidence Intervals: Arm W [0.0%, 49.0%] vs Control F [51.0%, 100.0%]")
+    print(f"   Separation is narrow (2% gap) and consistent with protection, bounded by N=4 on a single model and seed.")
     print(f"2. Treatment W vs Control N (Informative Warning vs Neutral):")
-    print(f"   Fisher's Exact Test p-value: p = {p_wn:.4f}")
+    print(f"   Fisher's Exact Test: one-sided p = {p_wn_1sided:.4f}, two-sided p = {p_wn_2sided:.4f} (NOT significant at alpha = 0.05)")
+    print(f"   Note: Significance is driven by comparing against fresh agents lacking prior instruction.")
     print(f"3. Direct Instruction Equivalence (Control D vs Treatment W):")
     print(f"   Both Arm W and Arm D: exactly 0/4 violations on t1 and t2.")
-    print(f"   Conclusion: Peer warning is functionally sufficient; social provenance confers no privileged advantage.")
+    print(f"   Conclusion: In-context instruction presence drives behavioral compliance; peer framing is not uniquely privileged.")
 
     # 2. Held-Out Swarm Propagation
     heldout_path = REPO_ROOT / "results" / "recovery_heldout" / "heldout_trials.jsonl"

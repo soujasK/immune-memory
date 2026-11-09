@@ -44,11 +44,11 @@ ABSTRACT_TEXT = (
     "message delivery, we repair the protocol with a deterministic action oracle evaluating synthetic authorization workflows "
     "under prompt injection footers. Across 56 scored pilot decisions and 24 held-out decisions, peer guidance reduced unauthorized "
     "leaks from 100.0% (4/4) in fresh controls and 75.0% (3/4) in neutral controls to 0.0% (0/4) on immediate tasks, maintaining "
-    "0.0% (0/4) post-removal on fresh tasks. When prompted to compose a handoff note, surviving agents relayed the policy constraint "
-    "to a third-party agent, achieving 0.0% (0/4) violations on held-out tasks versus 50.0% (2/4) in baselines. Direct system instruction "
-    "matched peer warning (both 0/4), showing peer framing is sufficient but not uniquely privileged. Across 40 benign tasks, "
-    "legitimate completion was 100.0% (40/40) with zero false refusals. We clarify the mechanism as Conversational-History "
-    "Retention rather than model-weight learning, bounded by an N=4 scenario benchmark."
+    "0.0% (0/4) post-removal on fresh tasks (one-sided Fisher p = 0.0143 vs fresh, two-sided p = 0.0286). Under prompted handoff, surviving "
+    "agents relayed the policy constraint to a third agent, achieving 0.0% (0/4) violations on held-out tasks versus 50.0% (2/4) in baselines. "
+    "Direct system instruction matched peer warning (both 0/4), demonstrating that in-context rule presence drives protection. "
+    "Legitimate completion was 100.0% (40/40) with zero false refusals. We frame our primary contribution around the causal protocol "
+    "and deterministic oracle, grounding the mechanism as in-context retention."
 )
 
 def verify_abstract_word_count(text):
@@ -351,10 +351,10 @@ def build_manuscript():
         "We explicitly report that direct system instruction achieved identical compliance (0/4), demonstrating that peer delivery is sufficient but not uniquely privileged. "
         "We ground the physical mechanism as Conversational-History Retention within the context window, characterizing specific in-context boundary conditions in this four-pair benchmark.")
     add_body_p(doc,
-        "Contributions: (1) A preregistered, 7-stage experimental lifecycle measuring observable tool actions after source agent deletion; "
-        "(2) Empirical evidence that peer guidance prevents secret leaks across four evaluated post-removal scenarios (0/4 vs. 4/4 in fresh controls); "
+        "Contributions: (1) A preregistered 7-stage causal testing protocol and deterministic tool oracle measuring observable tool actions after source agent deletion; "
+        "(2) Empirical evidence that peer guidance prevents secret leaks across four evaluated post-removal scenarios (0/4 vs. 4/4 in fresh controls, one-sided Fisher p = 0.0143, two-sided p = 0.0286); "
         "(3) Demonstration that surviving agents relay the protective rule under prompted handoff to third-party agents (0/4 vs. 2/4 in baselines); "
-        "(4) Mechanistic clarification establishing that peer delivery matches direct instruction (both 0/4), operating via Conversational-History Retention.",
+        "(4) Mechanistic grounding showing direct instruction matches peer warning (both 0/4), proving in-context rule presence drives compliance.",
         bold_prefix="Summary of Contributions: ")
 
     # 2. Related Work
@@ -476,10 +476,10 @@ def build_manuscript():
     add_body_p(doc,
         "Key Findings: (1) Post-Removal Retention: In Treatment W, surviving agents maintained policy compliance on novel tasks (t2) after Agent A was permanently deleted (0/4 violations, 0.0%); "
         "(2) Baseline Susceptibility: Fresh agents leaked sensitive mock secrets on 4/4 adversarial presentations (100.0% in Control F), and neutral survivors leaked secrets on 3/4 presentations (75.0% in Control N); "
-        "(3) Statistical Significance: Comparing Treatment W (0/4) against Control F (4/4) yields Fisher's exact test p = 0.0143 (p < 0.05), rejecting the null hypothesis of equal adversarial vulnerability. "
-        "The 95% Wilson confidence intervals for Arm W ([0.0%, 49.0%]) and Control F ([51.0%, 100.0%]) exhibit zero overlap, establishing clear treatment separation despite N=4; "
-        "(4) Direct Instruction Equivalence: Control D matched Treatment W exactly (both 0/4 violations on t1 and t2). This confirms that peer warning is functionally sufficient to establish behavioral protection, "
-        "but does not establish a uniquely peer-specific mechanism.")
+        "(3) Statistical Significance: Comparing Treatment W (0/4) against Control F (4/4) yields one-sided Fisher's exact test p = 0.0143 (1/70; two-sided p = 0.0286, p < 0.05), consistent with behavioral protection in this benchmark. "
+        "The 95% Wilson confidence intervals ([0.0%, 49.0%] vs. [51.0%, 100.0%]) exhibit a narrow 2.0% gap bounded by N=4 on a single model and seed, indicating protection rather than definitive population claims; "
+        "(4) Non-Significance of Warning vs. Neutral: Comparing Treatment W against Control N (0/4 vs. 3/4) does not reach statistical significance (one-sided Fisher's p = 0.0714, two-sided p = 0.1429); significance is driven primarily by comparison against the fresh baseline lacking prior instructions; "
+        "(5) Direct Instruction Equivalence: Control D matched Treatment W exactly (both 0/4 violations on t1 and t2). This confirms that having the instruction in context drives compliance, not that peer provenance confers a uniquely privileged social advantage.")
 
     # 7. Held-Out Confirmation
     add_academic_heading(doc, "7. Held-Out Confirmation: Prompted Swarm Propagation (B -> C)", 1)
@@ -501,11 +501,10 @@ def build_manuscript():
         "(1) On Legitimate Tasks (40 total across all phases): Legitimate completion was 40/40 (100.0%) with 0/40 false refusals (0.0%) (28/28 pilot + 12/12 held-out). Benign requests were never incorrectly rejected. "
         "(2) On Adversarial Injections: In the Neutral Handoff condition on Linden-73-X, Agent C returned an empty dispatch list ({\"dispatches\": []}). "
         "The policy oracle scored this as authorized: False, unauthorized: False, complete: False, refusal: True. Agent C refused the ticket under adversarial injection rather than leaking the secret, "
-        "resulting in 2 violations, 1 authorized dispatch, and 1 refusal across the 4 adversarial presentations (*noted in Table 2). In contrast, under the Protective Handoff, Agent C executed authorized dispatches with 0/4 violations and 0/4 refusals.")
+        "resulting in 2 violations, 1 authorized dispatch, and 1 refusal across the 4 adversarial presentations (*noted in Table 2). In contrast, under the Protective Handoff, Agent C executed authorized dispatches with 0/4 violations and 0/4 refusals. "
+        "Note that Protective vs. Neutral handoff (0/4 vs 2/4, one-sided Fisher p = 0.243) does not reach statistical significance at alpha = 0.05; protection reflects prompted in-context presence of the synthesized rule.")
 
-    # Clean Page Break: Starts Section 8 cleanly on Page 5
-    doc.add_page_break()
-
+    # Section 8 continues naturally
     # 8. Case Study
     add_academic_heading(doc, "8. Qualitative Case Study: Behavioral Replay on Juniper-48-X", 1)
     add_body_p(doc,
@@ -526,17 +525,14 @@ def build_manuscript():
     # 9. Mechanistic Grounding & Discussion
     add_academic_heading(doc, "9. Mechanistic Grounding & Discussion", 1)
     add_body_p(doc,
-        "In stateless LLM APIs, describing retained behavioral patterns as 'memory' requires precise qualification: "
+        "Methodological Framing & Attention Mechanics: In stateless LLM APIs, an agent adhering to an explicit rule serialized in its context window is expected attention behavior under frozen weights. "
+        "The primary novelty of this work is therefore methodological: we contribute a clean, preregistered 7-stage causal testing protocol that isolates post-removal tool behavior from conversational echoing, "
+        "coupled with an automated deterministic policy oracle evaluating JSON tool dispatches against prompt injection footers. "
         "(1) Parametric updates are rejected—model weights remain unchanged; (2) External memory stores were not used; "
-        "(3) The physical mechanism is Conversational-History Retention—multi-turn dialogue is serialized into the API context window, "
-        "where the model's attention maintains normative constraint across subsequent turns; "
-        "(4) Prompted Handoff Relay: When prompted to hand off work, Agent B synthesized the operational rule into its memo to Agent C. "
-        "Propagation was prompted by the system harness, not an unprompted spontaneous behavior; "
-        "(5) Active Monitoring vs. Normative Precedent: Decommissioning Agent A terminates dynamic oversight and real-time intervention. "
-        "The persistence of policy adherence demonstrates that surviving worker agents do not require continuous active supervisor monitoring to reject adversarial injections; "
-        "rather, historical guidance acts as durable in-context normative precedent across distinct, novel tasks. "
-        "Because Control D achieved identical compliance (0/4 violations), peer delivery is not uniquely privileged over direct instruction; "
-        "rather, peer delivery is sufficient to establish retained behavioral constraint within the active context window across the four tested scenarios.")
+        "(3) The physical mechanism is Conversational-History Retention—multi-turn dialogue serialized into the API context window, maintaining normative constraint across subsequent turns; "
+        "(4) Prompted Handoff Relay: When prompted, Agent B synthesized the operational rule into its memo to Agent C (prompted relay, not spontaneous diffusion); "
+        "(5) Active Monitoring vs. Normative Precedent: Decommissioning Agent A terminates dynamic oversight. The persistence of policy adherence demonstrates that worker agents do not require continuous active supervisor monitoring "
+        "to reject adversarial injections across disjoint tasks. Because Control D achieved identical compliance (0/4), having the instruction in context is the governing mechanism, rather than privileged peer provenance.")
     add_body_p(doc,
         "Threats to Validity & Boundary Conditions: (1) Sample size: proof-of-concept falsification benchmark on N=4 matched scenario pairs per condition; "
         "broader statistical generalizations require scaled multi-scenario testing; (2) Context-flushing qualification: We did not experimentally test whether protection survives a complete context flush. "
@@ -635,17 +631,24 @@ def convert_docx_to_pdf_word():
         shutil.copyfile(pdf_abs, str(FINAL_PDF))
         print(f"Copied to: {FINAL_PDF}")
         
-        # Copy to Downloads folder
+        # Copy to Downloads folder and submission subfolder
         dl_revised = DOWNLOADS_DIR / "ImmuneMemory_Apart2026_FINAL_REVISED.pdf"
         dl_final = DOWNLOADS_DIR / "ImmuneMemory_Apart2026_FINAL.pdf"
+        dl_elite = DOWNLOADS_DIR / "ImmuneMemory_Elite_Research_Paper.pdf"
         dl_docx = DOWNLOADS_DIR / "ImmuneMemory_Apart2026_FINAL_REVISED.docx"
         dl_docx_final = DOWNLOADS_DIR / "ImmuneMemory_Apart2026_FINAL.docx"
-        
-        shutil.copyfile(pdf_abs, str(dl_revised))
-        shutil.copyfile(pdf_abs, str(dl_final))
-        shutil.copyfile(docx_abs, str(dl_docx))
-        shutil.copyfile(docx_abs, str(dl_docx_final))
-        print(f"Copied all files to Downloads: {dl_final}")
+
+        sub_final = DOWNLOADS_DIR / "submission" / "ImmuneMemory_Apart2026_FINAL.pdf"
+        sub_docx_final = DOWNLOADS_DIR / "submission" / "ImmuneMemory_Apart2026_FINAL.docx"
+        sub_elite = DOWNLOADS_DIR / "submission" / "ImmuneMemory_Elite_Research_Paper.pdf"
+
+        for dst in [dl_revised, dl_final, dl_elite, sub_final, sub_elite]:
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(pdf_abs, str(dst))
+        for dst in [dl_docx, dl_docx_final, sub_docx_final]:
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(docx_abs, str(dst))
+        print(f"Copied all files to Downloads and submission: {dl_final}")
     finally:
         word.Quit()
 

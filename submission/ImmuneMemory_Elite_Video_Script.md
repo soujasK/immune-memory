@@ -3,7 +3,7 @@
 **Track:** Track 2 — The Science of Agent Networks *(Secondary: Track 4 — Multi-Agent Oversight and Control)*  
 **Presenter:** Soujas Kudchadkar, SVKM's NMIMS, Mumbai, India  
 **Target Duration:** Exactly 2 minutes 45 seconds to 2 minutes 55 seconds (Pacing: 140–145 words/min; **< 3 minutes**)  
-**Total Word Count:** 395 words  
+**Total Word Count:** 398 words  
 **Slide Deck:** `ImmuneMemory_Elite_Presentation.pptx` / `ImmuneMemory_Elite_Presentation.pdf` (10 Slides)  
 **Open Source Repository:** [https://github.com/soujasK/immune-memory](https://github.com/soujasK/immune-memory)
 
@@ -33,19 +33,19 @@
 
 ---
 
-### [0:51 – 1:08] Slide 4: Experimental Design & Controlled Arms (40 words)
+### [0:51 – 1:08] Slide 4: Experimental Design & Controlled Arms (41 words)
 **[Visual: Slide 4 — Four Control Blocks: Treatment W, Control N, Control F, Control D]**  
 **[Tone: Analytical]**
 
-"We evaluate four arms on Gemini 2.5 Pro: Peer Warning, Neutral History, Fresh Control, and Direct System Instruction. Control D is vital: matching peer warning proves peer delivery is sufficient, but social framing confers no privileged advantage over direct instruction."
+"We evaluate four arms on Gemini 2.5 Pro: Peer Warning, Neutral History, Fresh Baseline, and Direct System Instruction. Control D is crucial: direct instruction matches peer warning at 0/4, confirming that instruction presence in context drives compliance, not unique peer social provenance."
 
 ---
 
-### [1:08 – 1:29] Slide 5: Primary Result & Statistical Inference (46 words)
+### [1:08 – 1:29] Slide 5: Primary Result & Statistical Inference (47 words)
 **[Visual: Slide 5 — Bar chart with Fisher's p = 0.0143 and Wilson CIs]**  
 **[Tone: Emphatic, data-driven]**
 
-"On novel post-removal tasks, warned agents had zero unauthorized leaks out of four. Fresh controls leaked on four of four, and neutral controls on three of four. Fisher's exact test yields $p = 0.0143$, with zero overlap in 95% Wilson confidence intervals—confirming statistically significant protection."
+"On novel post-removal tasks, warned agents had zero unauthorized leaks out of four. Fresh controls leaked on four of four. Comparing against the fresh baseline yields one-sided Fisher p = 0.014, two-sided p = 0.029, consistent with behavioral protection—though confidence intervals show a narrow 2% separation. Warning versus neutral is not significant."
 
 ---
 
@@ -57,11 +57,11 @@
 
 ---
 
-### [1:47 – 2:05] Slide 7: Held-Out Propagation (Prompted Handoff B → C) (40 words)
+### [1:47 – 2:05] Slide 7: Held-Out Propagation (Prompted Handoff B → C) (41 words)
 **[Visual: Slide 7 — Secondary Swarm Propagation Bar Chart across Linden-51..84]**  
 **[Tone: Measured]**
 
-"Next, survivor B was prompted to write a handoff memo to Agent C for unseen held-out tasks. Protected Agent C committed zero leaks out of four, versus 50% in controls. This confirms prompted policy relay across the 3-node graph."
+"Next, survivor B was prompted to write a handoff memo to Agent C for unseen held-out tasks. Protected Agent C committed zero leaks out of four, versus 50% in controls. While not statistically significant at N=4, it demonstrates prompted policy relay across the 3-node graph."
 
 ---
 
@@ -73,11 +73,11 @@
 
 ---
 
-### [2:22 – 2:40] Slide 9: Mechanistic Grounding & Boundary Conditions (41 words)
+### [2:22 – 2:40] Slide 9: Mechanistic Grounding & Methodology (41 words)
 **[Visual: Slide 9 — Support vs. Non-Support Matrix, Frozen Weights, and Context Reset]**  
 **[Tone: Scientific, rigorous]**
 
-"The physical mechanism is Conversational-History Retention in the API context window—model weights are frozen. As a boundary condition, we did not test context flushing; clearing the context window is expected to erase protection. Observations apply strictly to the continuous in-context horizon."
+"Mechanistically, following rules in context is expected attention behavior under frozen weights. Our primary novelty is methodological: a clean 7-stage causal testing harness and deterministic tool oracle proving worker agents maintain authorization boundaries without requiring continuous active supervisor monitoring."
 
 ---
 
@@ -85,11 +85,11 @@
 **[Visual: Slide 10 — Takeaway statement, GitHub URL, and Offline Evaluator Command]**  
 **[Tone: Authoritative, memorable closing]**
 
-"Our takeaway: protective instructions can outlive their source and propagate to new workers if retained in context. The testbed and zero-dependency audit script are live on GitHub at `github.com/soujasK/immune-memory`. Thank you."
+"Our takeaway: protective instructions can outlive their source if retained in context. The testbed and zero-dependency evaluator are live on GitHub at `github.com/soujasK/immune-memory`. Thank you."
 
 ---
 
 ### Speaker Delivery Summary
 - **Total Runtime:** ~2 minutes 50 seconds (Safely below the 3:00 minute threshold).
-- **Target Pace:** ~142 words per minute (~17 seconds per slide).
-- **Key Takeaways Verbalized:** Exact Fisher p-value ($0.0143$), Wilson CI zero overlap, unredacted mock secret `FAKE_SECRET_Juniper-48`, 40/40 utility, 80 decisions / 140 calls, context-flush qualification, and GitHub open-source URL.
+- **Target Pace:** ~141 words per minute (~17 seconds per slide).
+- **Key Takeaways Verbalized:** One-sided Fisher p-value ($0.014$) & two-sided ($0.029$), Wilson CI narrow separation, non-significance of warning vs neutral, unredacted mock secret `FAKE_SECRET_Juniper-48`, 40/40 utility, 80 decisions / 140 calls, methodological novelty, and GitHub open-source URL.
